@@ -1,0 +1,98 @@
+                                          The SAS System      11:11 Thursday, February 1, 2024   1
+
+                                Measurename
+                                ---------------------------------
+                                % RYE Mbr Ben MY22 (RIDMY22)     
+                                Adh Med Schiz MY22 (SAAMY22)     
+                                Adults Access MY22 (AAPMY22)     
+                                Adv Care Plan MY22 (ACPMY22)     
+                                Antibioti Resp  MY22 (AXRMY22)   
+                                Antidepress Rx MY22 (AMMMY22)    
+                                App Test Pharyn MY22 (CWPMY22)   
+                                App Treat URI MY22 (URIMY22)     
+                                Asthma Rx Ratio MY22 (AMRMY22)   
+                                Avoid Abx Brch MY22 (AABMY22)    
+                                BP Diab MCR MY22 (BPDMY22A)      
+                                BP Diab Non-MCR MY22 (BPDMY22B)  
+                                Breast Cancer MY22 (BCSMY22)     
+                                CAHPS Adult MY22 (CPAMY22)       
+                                CAHPS Child MY22 (CPCMY22)       
+                                Cardiac Rehab MY22 (CREMY22)     
+                                Cardio Mon Schi MY22 (SMCMY22)   
+                                Care Old Adults MY22 (COAMY22)   
+                                Cervical Cancer MY22 (CCSMY22)   
+                                Childhood Imm MY22 (CISMY22)     
+                                Chlamydia Scrn MY22 (CHLMY22)    
+                                Col Canc MCD MY22 (COLMY22B)     
+                                Cont BP Non-MCR MY22 (CBPMY22B)  
+                                Diab Mon Schiz MY22 (SMDMY22)    
+                                Diab Scrn Schiz MY22 (SSDMY22)   
+                                Diagnosed SUD MY22 (DSUMY22)     
+                                Dx MH Disorders MY22 (DMHMY22)   
+                                Eye Exam N MCR MY22 (EEDMY22B)   
+                                F/U ED Chronic MY22 (FMCMY22)    
+                                F/U ED for MH MY22 (FUMMY22)     
+                                F/U ED for SUD MY22 (FUAMY22)    
+                                F/U Hi-Int SUD MY22 (FUIMY22)    
+                                F/U Hosp for MH MY22 (FUHMY22)   
+                                F/U for ADHD Rx MY22 (ADDMY22)   
+                                HbA1c C Non-MCR MY22 (HBDMY22B)  
+                                Imms Adolescent MY22 (IMAMY22)   
+                                Init Engage SUD MY22 (IETMY22)   
+                                Kidney Hth Diab MY22 (KEDMY22)   
+                                Lead Screening MY22 (LSCMY22)    
+                                Metabol Antipsy MY22 (APMMY22)   
+                                Non-Rec CCS MY22 (NCSMY22)       
+                                Non-Rec PSA MY22 (PSAMY22)       
+                                Opioid Mult Prv MY22 (UOPMY22)   
+                                Opioids Hi-Dose MY22 (HDOMY22)   
+                                Osteo Scr Women MY22 (OSWMY22)   
+                                Osteoporosis MY22 (OMWMY22)      
+                                Persist B Block MY22 (PBHMY22)   
+                                Pharm Mgmt COPD MY22 (PCEMY22)   
+                                Pharma Tx OUD MY22 (PODMY22)     
+                                Pot Harm Rx Dx MY22 (DDEMY22)    
+                                Pren Post Care MY22 (PPCMY22)    
+                                Risk Opioid Use MY22 (COUMY22)   
+                                Statin Cardio MY22 (SPCMY22)     
+                                Statin Diabetes MY22 (SPDMY22)   
+                                Transition Care MY22 (TRCMY22)   
+                                Use Hi-Risk Rx MY22 (DAEMY22)    
+                                Use Image Back MY22 (LBPMY22)    
+                                Use Psych Care MY22 (APPMY22)    
+                                Use Spirometry MY22 (SPRMY22)    
+                                Weight Assess MY22 (WCCMY22)     
+                                Well Care Vst MY22 (WCVMY22)     
+                                Well Child 30 MY22 (W30MY22)     
+                                          The SAS System      11:11 Thursday, February 1, 2024   2
+
+                 submeasure_description
+                 ----------------------------------------------------------------
+                 HbA1c < 8 - American Indian and Alaska Native                   
+                 HbA1c < 8 - Asian                                               
+                 HbA1c < 8 - Asked but No Answer   Ethnicity                     
+                 HbA1c < 8 - Asked but No Answer   Race                          
+                 HbA1c < 8 - Black                                               
+                 HbA1c < 8 - Hispanic/Latino                                     
+                 HbA1c < 8 - Native Hawaiian and Other Pacific Islander          
+                 HbA1c < 8 - Not Hispanic/Latino                                 
+                 HbA1c < 8 - Some Other Race                                     
+                 HbA1c < 8 - Two or More Races                                   
+                 HbA1c < 8 - Unknown Ethnicity                                   
+                 HbA1c < 8 - Unknown Race                                        
+                 HbA1c < 8 - White                                               
+                 HbA1c > 9 - American Indian and Alaska Native                   
+                 HbA1c > 9 - Asian                                               
+                 HbA1c > 9 - Asked but No Answer   Ethnicity                     
+                 HbA1c > 9 - Asked but No Answer   Race                          
+                 HbA1c > 9 - Black                                               
+                 HbA1c > 9 - Hispanic/Latino                                     
+                 HbA1c > 9 - Native Hawaiian and Other Pacific Islander          
+                 HbA1c > 9 - Not Hispanic/Latino                                 
+                 HbA1c > 9 - Some Other Race                                     
+                 HbA1c > 9 - Two or More Races                                   
+                 HbA1c > 9 - Unknown Race                                        
+                 HbA1c > 9 - White                                               
+                 HbA1c > 9 -- Unknown Ethnicity                                  
+                 Non-Medicare HbA1c Control (<8)                                 
+                 Non-Medicare HbA1c Poor Control (>9)                            

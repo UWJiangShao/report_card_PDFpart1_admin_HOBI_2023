@@ -1,0 +1,1310 @@
+1                                       The SAS System       11:41 Wednesday, November 22, 2023
+
+NOTE: Copyright (c) 2023 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M8) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_WIN+PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.3
+      SAS/ETS 15.3
+      SAS/OR 15.3
+      SAS/IML 15.3
+      SAS/QC 15.3
+
+NOTE: Additional host information:
+
+ X64_WIN+PRO WIN 10.0.22631  Workstation
+
+NOTE: SAS initialization used:
+      real time           0.37 seconds
+      cpu time            0.28 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN;
+2          
+3          * Extract statewide average measure rate from Annual QOC report;
+4          
+5          %LET JOB = P14;
+6          
+7          LIBNAME QOC22 "..\Data\Raw_Data";
+NOTE: Libref QOC22 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: \\Mac\Dropbox for Business\MCO Report Card - 2024\Program\2. 
+      Admin\Data\Raw_Data
+8          LIBNAME OUT "..\Data\Temp_Data";
+NOTE: Libref OUT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: \\Mac\Dropbox for Business\MCO Report Card - 2024\Program\2. 
+      Admin\Data\Temp_Data
+9          
+10         * For each measure in the list, extract statewide level average rate;
+11         * create macro to extract info for each measure;
+12         %macro extract(program, measurename, submeasurename, outname);
+13         	data &program._&outname.;
+14         		set &program.;
+15         		where MEASURENAME =: &measurename.
+16         			and prxmatch(&submeasurename., SUBMEASURENAME)
+17         			and POPULATIONNAME = "ALL"
+18         			;
+19         		length outname $10;
+20         		outname = "&outname.";
+21         	run;
+22         %mend extract;
+23         
+24         
+25         
+26         * STAR;
+27         DATA STAR;
+28         	SET QOC22.STAR_HEDIS_ALL;
+29         	* rate2 = .;
+30         	* if denom ne 0 then rate2 = numer / denom;
+31         RUN;
+
+NOTE: There were 26862 observations read from the data set QOC22.STAR_HEDIS_ALL.
+NOTE: The data set WORK.STAR has 26862 observations and 26 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.11 seconds
+      
+
+32         
+33         * For STAR Adult;
+34         %extract(STAR, "Pren Post Care MY22 (PPCMY22)", "/Timeliness of prenatal care/",
+34       ! PPCpre);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Pren Post Care MY22 (PPCMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Timeliness of prenatal care/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value PPCpre
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to PPCpre
+MPRINT(EXTRACT):   data STAR_PPCpre;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Pren Post Care MY22 (PPCMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Timeliness of prenatal care/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Pren Post Care MY22 (PPCMY22)" and 
+prxmatch("/Timeliness of prenatal care/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to PPCpre
+MPRINT(EXTRACT):   outname = "PPCpre";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Pren Post Care MY22 (PPCMY22)') and PRXMATCH('/Timeliness of 
+      prenatal care/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_PPCPRE has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           1.95 seconds
+      cpu time            0.04 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+35         %extract(STAR, "Pren Post Care MY22 (PPCMY22)", "/Postpartum care/", PPCpost);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Pren Post Care MY22 (PPCMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Postpartum care/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value PPCpost
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to PPCpost
+MPRINT(EXTRACT):   data STAR_PPCpost;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Pren Post Care MY22 (PPCMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Postpartum care/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Pren Post Care MY22 (PPCMY22)" and 
+prxmatch("/Postpartum care/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to PPCpost
+MPRINT(EXTRACT):   outname = "PPCpost";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Pren Post Care MY22 (PPCMY22)') and PRXMATCH('/Postpartum care/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_PPCPOST has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+36         %extract(STAR, "Adults Access MY22 (AAPMY22)", "/All members/", AAP);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Adults Access MY22 (AAPMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/All members/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AAP
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to AAP
+MPRINT(EXTRACT):   data STAR_AAP;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Adults Access MY22 (AAPMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/All members/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Adults Access MY22 (AAPMY22)" and prxmatch("/All 
+members/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AAP
+MPRINT(EXTRACT):   outname = "AAP";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Adults Access MY22 (AAPMY22)') and PRXMATCH('/All members/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_AAP has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+37         %extract(STAR, "Cervical Cancer MY22 (CCSMY22)", "//" , CCS);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Cervical Cancer MY22 (CCSMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "//"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value CCS
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to CCS
+MPRINT(EXTRACT):   data STAR_CCS;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Cervical Cancer MY22 (CCSMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "//"
+MPRINT(EXTRACT):   where MEASURENAME =: "Cervical Cancer MY22 (CCSMY22)" and prxmatch("//", 
+SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to CCS
+MPRINT(EXTRACT):   outname = "CCS";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Cervical Cancer MY22 (CCSMY22)') and PRXMATCH('//', SUBMEASURENAME) 
+      and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_CCS has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+38         %extract(STAR, "Antidepress Rx MY22 (AMMMY22)", "/Effective Acute Phase Treatment/",
+38       !  AMM);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Antidepress Rx MY22 (AMMMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Effective Acute Phase Treatment/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AMM
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMM
+MPRINT(EXTRACT):   data STAR_AMM;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Antidepress Rx MY22 (AMMMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Effective Acute Phase Treatment/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Antidepress Rx MY22 (AMMMY22)" and 
+prxmatch("/Effective Acute Phase Treatment/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMM
+MPRINT(EXTRACT):   outname = "AMM";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Antidepress Rx MY22 (AMMMY22)') and PRXMATCH('/Effective Acute 
+      Phase Treatment/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_AMM has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+39         %extract(STAR, "F/U Hosp for MH MY22 (FUHMY22)", "/Total Follow Up within 7 Days/",
+39       ! FUH);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "F/U Hosp for MH MY22 (FUHMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Total Follow Up within 7 Days/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value FUH
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   data STAR_FUH;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "F/U Hosp for MH MY22 (FUHMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Total Follow Up within 7 Days/"
+MPRINT(EXTRACT):   where MEASURENAME =: "F/U Hosp for MH MY22 (FUHMY22)" and prxmatch("/Total 
+Follow Up within 7 Days/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   outname = "FUH";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'F/U Hosp for MH MY22 (FUHMY22)') and PRXMATCH('/Total Follow Up 
+      within 7 Days/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_FUH has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+40         %extract(STAR, "Kidney Hth Diab MY22 (KEDMY22)", "/Non-MCR Members Total\s*$/", KED)
+40       ! ;
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Kidney Hth Diab MY22 (KEDMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Non-MCR Members Total\s*$/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value KED
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to KED
+MPRINT(EXTRACT):   data STAR_KED;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Kidney Hth Diab MY22 (KEDMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Non-MCR Members Total\s*$/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Kidney Hth Diab MY22 (KEDMY22)" and 
+prxmatch("/Non-MCR Members Total\s*$/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to KED
+MPRINT(EXTRACT):   outname = "KED";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Kidney Hth Diab MY22 (KEDMY22)') and PRXMATCH('/Non-MCR Members 
+      Total\s*$/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_KED has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+41         
+42         /* %extract(STAR, "HbA1c C Non-MCR MY22 (HBDMY22B)", "/Non-Medicare HbA1c Control
+42       ! \(<8\)/", HBaTest8);
+43         %extract(STAR, "HbA1c C Non-MCR MY22 (HBDMY22B)", "/Non-Medicare HbA1c Control
+43       ! \(>9\)/", HBaTest9); */
+44         
+45         %extract(STAR, "Eye Exam N MCR MY22 (EEDMY22B)", "/Non-Medicare Eye Exam/", EED);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Eye Exam N MCR MY22 (EEDMY22B)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Non-Medicare Eye Exam/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value EED
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to EED
+MPRINT(EXTRACT):   data STAR_EED;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Eye Exam N MCR MY22 (EEDMY22B)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Non-Medicare Eye Exam/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Eye Exam N MCR MY22 (EEDMY22B)" and 
+prxmatch("/Non-Medicare Eye Exam/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to EED
+MPRINT(EXTRACT):   outname = "EED";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Eye Exam N MCR MY22 (EEDMY22B)') and PRXMATCH('/Non-Medicare Eye 
+      Exam/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_EED has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+46         
+47         data STAR_Adult_statewide_average;
+48         	set
+49         		STAR_PPCpre
+50         		STAR_PPCpost
+51         		STAR_AAP
+52         		STAR_CCS
+53         		STAR_AMM
+54         		STAR_FUH
+55         		STAR_KED
+56         
+57         		/* STAR_CDCtest
+58         		STAR_CDCeye */
+59         
+60         		STAR_EED
+61         		;
+62         	LENGTH program $ 12;
+63         	program = "STAR_Adult";
+64         	keep program outname numer denom rate;
+65         run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR_PPCPRE.
+NOTE: There were 1 observations read from the data set WORK.STAR_PPCPOST.
+NOTE: There were 1 observations read from the data set WORK.STAR_AAP.
+NOTE: There were 1 observations read from the data set WORK.STAR_CCS.
+NOTE: There were 1 observations read from the data set WORK.STAR_AMM.
+NOTE: There were 1 observations read from the data set WORK.STAR_FUH.
+NOTE: There were 1 observations read from the data set WORK.STAR_KED.
+NOTE: There were 1 observations read from the data set WORK.STAR_EED.
+NOTE: The data set WORK.STAR_ADULT_STATEWIDE_AVERAGE has 8 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+66         
+67         
+68         
+69         
+70         * For STAR Child;
+71         %extract(STAR, "Well Child 30 MY22 (W30MY22)", "/Well child visits in the first 15
+71       ! months/", W3015);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Child 30 MY22 (W30MY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Well child visits in the first 15 
+      months/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value W3015
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to W3015
+MPRINT(EXTRACT):   data STAR_W3015;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Child 30 MY22 (W30MY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Well child visits in the first 15 
+            months/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Child 30 MY22 (W30MY22)" and prxmatch("/Well 
+child visits in the first 15 months/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to W3015
+MPRINT(EXTRACT):   outname = "W3015";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Well Child 30 MY22 (W30MY22)') and PRXMATCH('/Well child visits in 
+      the first 15 months/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_W3015 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+72         %extract(STAR, "Well Child 30 MY22 (W30MY22)", "/Well child visits for age15-30
+72       ! months/", W3030);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Child 30 MY22 (W30MY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Well child visits for age15-30 months/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value W3030
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to W3030
+MPRINT(EXTRACT):   data STAR_W3030;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Child 30 MY22 (W30MY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Well child visits for age15-30 months/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Child 30 MY22 (W30MY22)" and prxmatch("/Well 
+child visits for age15-30 months/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to W3030
+MPRINT(EXTRACT):   outname = "W3030";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Well Child 30 MY22 (W30MY22)') and PRXMATCH('/Well child visits for 
+      age15-30 months/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_W3030 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+73         %extract(STAR, "Well Care Vst MY22 (WCVMY22)", "/3 to 11 years old/", WCV11);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Care Vst MY22 (WCVMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/3 to 11 years old/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value WCV11
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV11
+MPRINT(EXTRACT):   data STAR_WCV11;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Care Vst MY22 (WCVMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/3 to 11 years old/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Care Vst MY22 (WCVMY22)" and prxmatch("/3 to 11 
+years old/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV11
+MPRINT(EXTRACT):   outname = "WCV11";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Well Care Vst MY22 (WCVMY22)') and PRXMATCH('/3 to 11 years old/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_WCV11 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+74         %extract(STAR, "Well Care Vst MY22 (WCVMY22)", "/12 to 17 years old/", WCV17);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Care Vst MY22 (WCVMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/12 to 17 years old/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value WCV17
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV17
+MPRINT(EXTRACT):   data STAR_WCV17;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Care Vst MY22 (WCVMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/12 to 17 years old/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Care Vst MY22 (WCVMY22)" and prxmatch("/12 to 17 
+years old/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV17
+MPRINT(EXTRACT):   outname = "WCV17";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Well Care Vst MY22 (WCVMY22)') and PRXMATCH('/12 to 17 years old/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_WCV17 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+75         %extract(STAR, "Childhood Imm MY22 (CISMY22)", "/Combination 10 Immunizations/",
+75       ! CIS);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Childhood Imm MY22 (CISMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Combination 10 Immunizations/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value CIS
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to CIS
+MPRINT(EXTRACT):   data STAR_CIS;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Childhood Imm MY22 (CISMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Combination 10 Immunizations/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Childhood Imm MY22 (CISMY22)" and 
+prxmatch("/Combination 10 Immunizations/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to CIS
+MPRINT(EXTRACT):   outname = "CIS";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Childhood Imm MY22 (CISMY22)') and PRXMATCH('/Combination 10 
+      Immunizations/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_CIS has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+76         %extract(STAR, "Imms Adolescent MY22 (IMAMY22)", "/Combination 2 Immunizations/",
+76       ! IMA);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Imms Adolescent MY22 (IMAMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Combination 2 Immunizations/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value IMA
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to IMA
+MPRINT(EXTRACT):   data STAR_IMA;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Imms Adolescent MY22 (IMAMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Combination 2 Immunizations/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Imms Adolescent MY22 (IMAMY22)" and 
+prxmatch("/Combination 2 Immunizations/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to IMA
+MPRINT(EXTRACT):   outname = "IMA";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Imms Adolescent MY22 (IMAMY22)') and PRXMATCH('/Combination 2 
+      Immunizations/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_IMA has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+77         %extract(STAR, "Asthma Rx Ratio MY22 (AMRMY22)", "/Age 5 to 11 Ratio > 0.50/",
+77       ! AMR511);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Asthma Rx Ratio MY22 (AMRMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Age 5 to 11 Ratio > 0.50/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AMR511
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMR511
+MPRINT(EXTRACT):   data STAR_AMR511;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Asthma Rx Ratio MY22 (AMRMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Age 5 to 11 Ratio > 0.50/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Asthma Rx Ratio MY22 (AMRMY22)" and prxmatch("/Age 5 
+to 11 Ratio > 0.50/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMR511
+MPRINT(EXTRACT):   outname = "AMR511";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Asthma Rx Ratio MY22 (AMRMY22)') and PRXMATCH('/Age 5 to 11 Ratio > 
+      0.50/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_AMR511 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+78         %extract(STAR, "Asthma Rx Ratio MY22 (AMRMY22)", "/Age 12 to 18 Ratio > 0.50/",
+78       ! AMR1218);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Asthma Rx Ratio MY22 (AMRMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Age 12 to 18 Ratio > 0.50/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AMR1218
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMR1218
+MPRINT(EXTRACT):   data STAR_AMR1218;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Asthma Rx Ratio MY22 (AMRMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Age 12 to 18 Ratio > 0.50/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Asthma Rx Ratio MY22 (AMRMY22)" and prxmatch("/Age 12 
+to 18 Ratio > 0.50/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMR1218
+MPRINT(EXTRACT):   outname = "AMR1218";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'Asthma Rx Ratio MY22 (AMRMY22)') and PRXMATCH('/Age 12 to 18 Ratio 
+      > 0.50/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_AMR1218 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+79         
+80         	* Combine AMR from age 5 to 11 and age 12 to 18;
+81         	
+81       !  proc sql;
+82         		create table STAR_AMR as
+83         		select "AMR" as outname
+84         				,A.numer + B.numer as numer
+85         				,A.Denom + B.Denom as Denom
+86         				,(A.numer + B.numer) / (A.Denom + B.Denom) * 100 as rate format =  8.2
+87         			from STAR_AMR511 A, STAR_AMR1218 B
+88         			;
+NOTE: The execution of this query involves performing one or more Cartesian product joins that 
+      can not be optimized.
+NOTE: Table WORK.STAR_AMR created, with 1 rows and 4 columns.
+
+89         	quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.48 seconds
+      cpu time            0.01 seconds
+      
+
+90         
+91         %extract(STAR, "F/U for ADHD Rx MY22 (ADDMY22)", "/Initiation Phase/", ADD);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STAR
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "F/U for ADHD Rx MY22 (ADDMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Initiation Phase/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value ADD
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+SYMBOLGEN:  Macro variable OUTNAME resolves to ADD
+MPRINT(EXTRACT):   data STAR_ADD;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STAR
+MPRINT(EXTRACT):   set STAR;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "F/U for ADHD Rx MY22 (ADDMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Initiation Phase/"
+MPRINT(EXTRACT):   where MEASURENAME =: "F/U for ADHD Rx MY22 (ADDMY22)" and 
+prxmatch("/Initiation Phase/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to ADD
+MPRINT(EXTRACT):   outname = "ADD";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR.
+      WHERE (MEASURENAME=:'F/U for ADHD Rx MY22 (ADDMY22)') and PRXMATCH('/Initiation Phase/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STAR_ADD has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+92         
+93         
+94         
+95         data STAR_Child_statewide_average;
+96         	set
+97         		STAR_W3015
+98         		STAR_W3030
+99         		STAR_WCV11
+100        		STAR_WCV17
+101        		STAR_CIS
+102        		STAR_IMA
+103        		STAR_AMR
+104        		STAR_ADD
+105        		;
+106        	format rate 8.2;
+107        	LENGTH program $ 12;
+108        	program = "STAR_Child";
+109        	keep program outname numer denom rate;
+110        run;
+
+NOTE: There were 1 observations read from the data set WORK.STAR_W3015.
+NOTE: There were 1 observations read from the data set WORK.STAR_W3030.
+NOTE: There were 1 observations read from the data set WORK.STAR_WCV11.
+NOTE: There were 1 observations read from the data set WORK.STAR_WCV17.
+NOTE: There were 1 observations read from the data set WORK.STAR_CIS.
+NOTE: There were 1 observations read from the data set WORK.STAR_IMA.
+NOTE: There were 1 observations read from the data set WORK.STAR_AMR.
+NOTE: There were 1 observations read from the data set WORK.STAR_ADD.
+NOTE: The data set WORK.STAR_CHILD_STATEWIDE_AVERAGE has 8 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+111        
+112        
+113        * STAR+PLUS;
+114        DATA STARPLUS;
+115        	SET QOC22.STARPLUS_HEDIS_ALL;
+116        	* rate2 = .;
+117        	* if denom ne 0 then rate2 = numer / denom;
+118        RUN;
+
+NOTE: There were 17061 observations read from the data set QOC22.STARPLUS_HEDIS_ALL.
+NOTE: The data set WORK.STARPLUS has 17061 observations and 26 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+119        
+120        %extract(STARPLUS, "Adults Access MY22 (AAPMY22)", "/All members/", AAP);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Adults Access MY22 (AAPMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/All members/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AAP
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to AAP
+MPRINT(EXTRACT):   data STARPLUS_AAP;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Adults Access MY22 (AAPMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/All members/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Adults Access MY22 (AAPMY22)" and prxmatch("/All 
+members/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AAP
+MPRINT(EXTRACT):   outname = "AAP";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Adults Access MY22 (AAPMY22)') and PRXMATCH('/All members/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_AAP has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+121        %extract(STARPLUS, "Breast Cancer MY22 (BCSMY22)", "/Non-Medicare Total\s*$/", BCS);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Breast Cancer MY22 (BCSMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Non-Medicare Total\s*$/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value BCS
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to BCS
+MPRINT(EXTRACT):   data STARPLUS_BCS;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Breast Cancer MY22 (BCSMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Non-Medicare Total\s*$/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Breast Cancer MY22 (BCSMY22)" and 
+prxmatch("/Non-Medicare Total\s*$/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to BCS
+MPRINT(EXTRACT):   outname = "BCS";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Breast Cancer MY22 (BCSMY22)') and PRXMATCH('/Non-Medicare 
+      Total\s*$/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_BCS has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+122        %extract(STARPLUS, "Cervical Cancer MY22 (CCSMY22)", "//", CCS);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Cervical Cancer MY22 (CCSMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "//"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value CCS
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to CCS
+MPRINT(EXTRACT):   data STARPLUS_CCS;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Cervical Cancer MY22 (CCSMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "//"
+MPRINT(EXTRACT):   where MEASURENAME =: "Cervical Cancer MY22 (CCSMY22)" and prxmatch("//", 
+SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to CCS
+MPRINT(EXTRACT):   outname = "CCS";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Cervical Cancer MY22 (CCSMY22)') and PRXMATCH('//', SUBMEASURENAME) 
+      and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_CCS has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+123        %extract(STARPLUS, "Antidepress Rx MY22 (AMMMY22)", "/Effective Acute Phase
+123      ! Treatment/", AMM);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Antidepress Rx MY22 (AMMMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Effective Acute Phase Treatment/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value AMM
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMM
+MPRINT(EXTRACT):   data STARPLUS_AMM;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Antidepress Rx MY22 (AMMMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Effective Acute Phase Treatment/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Antidepress Rx MY22 (AMMMY22)" and 
+prxmatch("/Effective Acute Phase Treatment/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to AMM
+MPRINT(EXTRACT):   outname = "AMM";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Antidepress Rx MY22 (AMMMY22)') and PRXMATCH('/Effective Acute 
+      Phase Treatment/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_AMM has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+124        %extract(STARPLUS, "F/U Hosp for MH MY22 (FUHMY22)", "/Total Follow Up within 7
+124      ! Days/", FUH);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "F/U Hosp for MH MY22 (FUHMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Total Follow Up within 7 Days/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value FUH
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   data STARPLUS_FUH;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "F/U Hosp for MH MY22 (FUHMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Total Follow Up within 7 Days/"
+MPRINT(EXTRACT):   where MEASURENAME =: "F/U Hosp for MH MY22 (FUHMY22)" and prxmatch("/Total 
+Follow Up within 7 Days/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   outname = "FUH";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'F/U Hosp for MH MY22 (FUHMY22)') and PRXMATCH('/Total Follow Up 
+      within 7 Days/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_FUH has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+125        %extract(STARPLUS, "Init Engage SUD MY22 (IETMY22)", "/Initiation total \(18-64\)/",
+125      !  IET);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Init Engage SUD MY22 (IETMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Initiation total \(18-64\)/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value IET
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to IET
+MPRINT(EXTRACT):   data STARPLUS_IET;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Init Engage SUD MY22 (IETMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Initiation total \(18-64\)/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Init Engage SUD MY22 (IETMY22)" and 
+prxmatch("/Initiation total \(18-64\)/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to IET
+MPRINT(EXTRACT):   outname = "IET";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Init Engage SUD MY22 (IETMY22)') and PRXMATCH('/Initiation total 
+      \(18-64\)/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_IET has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+126        %extract(STARPLUS, "Pharm Mgmt COPD MY22 (PCEMY22)", "/Bronchodilators/", PCEbronch)
+126      ! ;
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Pharm Mgmt COPD MY22 (PCEMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Bronchodilators/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value PCEbronch
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to PCEbronch
+MPRINT(EXTRACT):   data STARPLUS_PCEbronch;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Pharm Mgmt COPD MY22 (PCEMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Bronchodilators/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Pharm Mgmt COPD MY22 (PCEMY22)" and 
+prxmatch("/Bronchodilators/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to PCEbronch
+MPRINT(EXTRACT):   outname = "PCEbronch";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Pharm Mgmt COPD MY22 (PCEMY22)') and PRXMATCH('/Bronchodilators/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_PCEBRONCH has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+127        %extract(STARPLUS, "Pharm Mgmt COPD MY22 (PCEMY22)", "/Systemic Corticosteroids/",
+127      ! PCEcort);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Pharm Mgmt COPD MY22 (PCEMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Systemic Corticosteroids/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value PCEcort
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to PCEcort
+MPRINT(EXTRACT):   data STARPLUS_PCEcort;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Pharm Mgmt COPD MY22 (PCEMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Systemic Corticosteroids/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Pharm Mgmt COPD MY22 (PCEMY22)" and 
+prxmatch("/Systemic Corticosteroids/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to PCEcort
+MPRINT(EXTRACT):   outname = "PCEcort";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Pharm Mgmt COPD MY22 (PCEMY22)') and PRXMATCH('/Systemic 
+      Corticosteroids/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_PCECORT has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+128        %extract(STARPLUS, "Use Spirometry MY22 (SPRMY22)", "/./", SPR);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Use Spirometry MY22 (SPRMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/./"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value SPR
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to SPR
+MPRINT(EXTRACT):   data STARPLUS_SPR;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Use Spirometry MY22 (SPRMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/./"
+MPRINT(EXTRACT):   where MEASURENAME =: "Use Spirometry MY22 (SPRMY22)" and prxmatch("/./", 
+SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to SPR
+MPRINT(EXTRACT):   outname = "SPR";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Use Spirometry MY22 (SPRMY22)') and PRXMATCH('/./', SUBMEASURENAME) 
+      and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_SPR has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+129        %extract(STARPLUS, "Kidney Hth Diab MY22 (KEDMY22)", "/Non-MCR Members Total\s*$/",
+129      ! KED);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Kidney Hth Diab MY22 (KEDMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Non-MCR Members Total\s*$/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value KED
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to KED
+MPRINT(EXTRACT):   data STARPLUS_KED;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Kidney Hth Diab MY22 (KEDMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Non-MCR Members Total\s*$/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Kidney Hth Diab MY22 (KEDMY22)" and 
+prxmatch("/Non-MCR Members Total\s*$/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to KED
+MPRINT(EXTRACT):   outname = "KED";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Kidney Hth Diab MY22 (KEDMY22)') and PRXMATCH('/Non-MCR Members 
+      Total\s*$/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_KED has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+130        
+131        /* %extract(STARPLUS, "Comp Diab N MCR MY22 (CDCMY22B)", "/Non-Medicare HbA1c
+131      ! Test/", CDCtest); */
+132        
+133        %extract(STARPLUS, "Eye Exam N MCR MY22 (EEDMY22B)", "/Non-Medicare Eye Exam/", EED)
+133      ! ;
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARPLUS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Eye Exam N MCR MY22 (EEDMY22B)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Non-Medicare Eye Exam/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value EED
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+SYMBOLGEN:  Macro variable OUTNAME resolves to EED
+MPRINT(EXTRACT):   data STARPLUS_EED;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARPLUS
+MPRINT(EXTRACT):   set STARPLUS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Eye Exam N MCR MY22 (EEDMY22B)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Non-Medicare Eye Exam/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Eye Exam N MCR MY22 (EEDMY22B)" and 
+prxmatch("/Non-Medicare Eye Exam/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to EED
+MPRINT(EXTRACT):   outname = "EED";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS.
+      WHERE (MEASURENAME=:'Eye Exam N MCR MY22 (EEDMY22B)') and PRXMATCH('/Non-Medicare Eye 
+      Exam/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARPLUS_EED has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+134        
+135        
+136        DATA STARPLUS_statewide_average;
+137        	set
+138        		STARPLUS_AAP
+139        		STARPLUS_BCS
+140        		STARPLUS_CCS
+141        		STARPLUS_AMM
+142        		STARPLUS_FUH
+143        		STARPLUS_IET
+144        		STARPLUS_PCEbronch
+145        		STARPLUS_PCEcort
+146        		STARPLUS_SPR
+147        		STARPLUS_KED
+148        
+149        		/* STARPLUS_CDCtest
+150        		STARPLUS_CDCeye */
+151        
+152        		STARPLUS_EED
+153        		;
+154        	LENGTH program $ 12;
+155        	program = "STARPLUS";
+156        	keep program outname numer denom rate;
+157        run;
+
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_AAP.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_BCS.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_CCS.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_AMM.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_FUH.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_IET.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_PCEBRONCH.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_PCECORT.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_SPR.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_KED.
+NOTE: There were 1 observations read from the data set WORK.STARPLUS_EED.
+NOTE: The data set WORK.STARPLUS_STATEWIDE_AVERAGE has 11 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+158        
+159        
+160        * STAR Kids;
+161        DATA STARKIDS;
+162        	SET QOC22.STARKIDS_HEDIS_ALL;
+163        	* rate2 = .;
+164        	* if denom ne 0 then rate2 = numer / denom;
+165        RUN;
+
+NOTE: There were 18513 observations read from the data set QOC22.STARKIDS_HEDIS_ALL.
+NOTE: The data set WORK.STARKIDS has 18513 observations and 26 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+166        
+167        
+168        %extract(STARKIDS, "Well Care Vst MY22 (WCVMY22)", "/3 to 11 years old/", WCV11);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARKIDS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Care Vst MY22 (WCVMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/3 to 11 years old/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value WCV11
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV11
+MPRINT(EXTRACT):   data STARKIDS_WCV11;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+MPRINT(EXTRACT):   set STARKIDS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Care Vst MY22 (WCVMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/3 to 11 years old/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Care Vst MY22 (WCVMY22)" and prxmatch("/3 to 11 
+years old/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV11
+MPRINT(EXTRACT):   outname = "WCV11";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARKIDS.
+      WHERE (MEASURENAME=:'Well Care Vst MY22 (WCVMY22)') and PRXMATCH('/3 to 11 years old/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARKIDS_WCV11 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+169        %extract(STARKIDS, "Well Care Vst MY22 (WCVMY22)", "/12 to 17 years old/", WCV17);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARKIDS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Well Care Vst MY22 (WCVMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/12 to 17 years old/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value WCV17
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV17
+MPRINT(EXTRACT):   data STARKIDS_WCV17;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+MPRINT(EXTRACT):   set STARKIDS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Well Care Vst MY22 (WCVMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/12 to 17 years old/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Well Care Vst MY22 (WCVMY22)" and prxmatch("/12 to 17 
+years old/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to WCV17
+MPRINT(EXTRACT):   outname = "WCV17";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARKIDS.
+      WHERE (MEASURENAME=:'Well Care Vst MY22 (WCVMY22)') and PRXMATCH('/12 to 17 years old/', 
+      SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARKIDS_WCV17 has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+170        %extract(STARKIDS, "F/U Hosp for MH MY22 (FUHMY22)", "/Total Follow Up within 7
+170      ! Days/", FUH);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARKIDS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "F/U Hosp for MH MY22 (FUHMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Total Follow Up within 7 Days/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value FUH
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   data STARKIDS_FUH;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+MPRINT(EXTRACT):   set STARKIDS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "F/U Hosp for MH MY22 (FUHMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Total Follow Up within 7 Days/"
+MPRINT(EXTRACT):   where MEASURENAME =: "F/U Hosp for MH MY22 (FUHMY22)" and prxmatch("/Total 
+Follow Up within 7 Days/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to FUH
+MPRINT(EXTRACT):   outname = "FUH";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARKIDS.
+      WHERE (MEASURENAME=:'F/U Hosp for MH MY22 (FUHMY22)') and PRXMATCH('/Total Follow Up 
+      within 7 Days/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARKIDS_FUH has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+171        %extract(STARKIDS, "Metabol Antipsy MY22 (APMMY22)", "/Glucose and Chol Combined -
+171      ! All Ages/", APM);
+MLOGIC(EXTRACT):  Beginning execution.
+MLOGIC(EXTRACT):  Parameter PROGRAM has value STARKIDS
+MLOGIC(EXTRACT):  Parameter MEASURENAME has value "Metabol Antipsy MY22 (APMMY22)"
+MLOGIC(EXTRACT):  Parameter SUBMEASURENAME has value "/Glucose and Chol Combined - All Ages/"
+MLOGIC(EXTRACT):  Parameter OUTNAME has value APM
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+SYMBOLGEN:  Macro variable OUTNAME resolves to APM
+MPRINT(EXTRACT):   data STARKIDS_APM;
+SYMBOLGEN:  Macro variable PROGRAM resolves to STARKIDS
+MPRINT(EXTRACT):   set STARKIDS;
+SYMBOLGEN:  Macro variable MEASURENAME resolves to "Metabol Antipsy MY22 (APMMY22)"
+SYMBOLGEN:  Macro variable SUBMEASURENAME resolves to "/Glucose and Chol Combined - All Ages/"
+MPRINT(EXTRACT):   where MEASURENAME =: "Metabol Antipsy MY22 (APMMY22)" and 
+prxmatch("/Glucose and Chol Combined - All Ages/", SUBMEASURENAME) and POPULATIONNAME = "ALL" ;
+MPRINT(EXTRACT):   length outname $10;
+SYMBOLGEN:  Macro variable OUTNAME resolves to APM
+MPRINT(EXTRACT):   outname = "APM";
+MPRINT(EXTRACT):   run;
+
+NOTE: There were 1 observations read from the data set WORK.STARKIDS.
+      WHERE (MEASURENAME=:'Metabol Antipsy MY22 (APMMY22)') and PRXMATCH('/Glucose and Chol 
+      Combined - All Ages/', SUBMEASURENAME) and (POPULATIONNAME='ALL');
+NOTE: The data set WORK.STARKIDS_APM has 1 observations and 27 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(EXTRACT):  Ending execution.
+172        
+173        DATA STARKIDS_statewide_average;
+174        	set
+175        		STARKIDS_WCV11
+176        		STARKIDS_WCV17
+177        		STARKIDS_FUH
+178        		STARKIDS_APM
+179        		;
+180        	LENGTH program $ 12;
+181        	program = "STARKIDS";
+182        	keep program outname numer denom rate;
+183        RUN;
+
+NOTE: There were 1 observations read from the data set WORK.STARKIDS_WCV11.
+NOTE: There were 1 observations read from the data set WORK.STARKIDS_WCV17.
+NOTE: There were 1 observations read from the data set WORK.STARKIDS_FUH.
+NOTE: There were 1 observations read from the data set WORK.STARKIDS_APM.
+NOTE: The data set WORK.STARKIDS_STATEWIDE_AVERAGE has 4 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+184        
+185        
+186        DATA STATEWIDE_AVERAGE;
+187        	RETAIN program outname numer denom rate;
+188        	SET
+189        /*		CHIP_statewide_average*/
+190        		STAR_Adult_statewide_average
+191        		STAR_Child_statewide_average
+192        		STARPLUS_statewide_average
+193        		STARKIDS_statewide_average
+194        		;
+195        		format rate 8.2;
+196        RUN;
+
+NOTE: There were 8 observations read from the data set WORK.STAR_ADULT_STATEWIDE_AVERAGE.
+NOTE: There were 8 observations read from the data set WORK.STAR_CHILD_STATEWIDE_AVERAGE.
+NOTE: There were 11 observations read from the data set WORK.STARPLUS_STATEWIDE_AVERAGE.
+NOTE: There were 4 observations read from the data set WORK.STARKIDS_STATEWIDE_AVERAGE.
+NOTE: The data set WORK.STATEWIDE_AVERAGE has 31 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+197        
+198        * ods excel file="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+198      ! 2024\Program\2. Admin\Data\Temp_Data\STATEWIDE_AVERAGE.xlsx"
+199        * 	options (sheet_name = "STATEWIDE_AVERAGE");
+200        
+201        * PROC PRINT DATA=STATEWIDE_AVERAGE NOOBS;
+202        * 	format rate 8.2;
+203        * RUN;
+204        
+205        * ods excel close;
+206        
+207        /*proc export data=STATEWIDE_AVERAGE*/
+208        /*	outfile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2.
+208      ! Admin\Data\Temp_Data\STATEWIDE_AVERAGE.xlsx"*/
+209        /*	dbms=xlsx*/
+210        /*	replace*/
+211        /*	;*/
+212        /*run;*/
+213        
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           3.43 seconds
+      cpu time            0.95 seconds
+      

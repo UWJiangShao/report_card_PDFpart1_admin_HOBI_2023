@@ -1,0 +1,311 @@
+1                                         The SAS System           23:34 Sunday, December 10, 2023
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.2
+      SAS/ETS 15.2
+      SAS/OR 15.2
+      SAS/IML 15.2
+      SAS/QC 15.2
+
+NOTE: Additional host information:
+
+ X64_10PRO WIN 10.0.19041  Workstation
+
+NOTE: SAS initialization used:
+      real time           1.57 seconds
+      cpu time            0.31 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN noxwait noxsync;
+2          
+3          LIBNAME IN02 "C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\5.
+3        ! Composite\Data\raw_data\admin";
+NOTE: Libref IN02 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\5. 
+      Composite\Data\raw_data\admin
+4          
+5          %LET JOB = P32;
+6          
+7          proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+7        ! 2024\Program\2. Admin\Data\raw_Data\plancode.xlsx"
+8          	dbms=XLSX
+9          	out=plancode
+10         	;
+11         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 198 observations and 10 variables.
+NOTE: WORK.PLANCODE data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.03 seconds
+      
+
+12         
+13         
+14         *** ------ STAR Child prepare data
+14       ! ---------------------------------------------------------------------------------------
+14       ! -------------------;
+15         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+15       ! 2024\Program\2. Admin\Data\temp_Data\STAR_Child_for_analysis.xlsx"
+16         	dbms=XLSX
+17         	out=STAR_Child
+18         	;
+19         	sheet="SC23_admin";
+20         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 73 variables.
+NOTE: WORK.STAR_CHILD data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.01 seconds
+      
+
+21         
+22         /* create round and unround data. Note that for composite calculation, unrounded data
+22       ! is used */
+23         data STAR_Child;
+24         	set STAR_Child;
+25         	plancode = compress(plancode, "()");
+26         
+27         	W30comp_rat_unround = mean(W3015_rat, W3030_rat);
+28         	WCVcomp_rat_unround = mean(WCV11_rat,WCV17_rat);
+29         	vacc_rat_unround = mean(CIS_rat, IMA_rat);
+30         	
+31         	W30comp_rat = round(mean(W3015_rat, W3030_rat), 0.5);
+32         	WCVcomp_rat = round(mean(WCV11_rat,WCV17_rat), 0.5);
+33         	vacc_rat = round(mean(CIS_rat, IMA_rat), 0.5);
+34         
+35         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      3 at 27:24   1 at 28:24   2 at 29:21   3 at 31:16   3 at 31:22   1 at 32:16   1 at 32:22
+      2 at 33:13   2 at 33:19   
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 79 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.00 seconds
+      
+
+36         
+37         
+38         
+39         *** ------ STAR Adult prepare data
+39       ! ---------------------------------------------------------------------------------------
+39       ! -------------------;
+40         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+40       ! 2024\Program\2. Admin\Data\Temp_Data\STAR_Adult_for_analysis.xlsx"
+41         	dbms=XLSX
+42         	out=STAR_Adult
+43         	;
+44         	sheet="SA23_admin";
+45         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 73 variables.
+NOTE: WORK.STAR_ADULT data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+46         
+47         data STAR_Adult;
+48         	set STAR_Adult;
+49         	plancode = compress(plancode, "()");
+50         
+51         	BHcomp_rat_unround = mean(AMM_rat, FUH_rat);
+52         	CDCcomp_rat_unround = mean(KED_rat, EED_rat);
+53         
+54         	BHcomp_rat = round(mean(AMM_rat, FUH_rat), 0.5);
+55         	CDCcomp_rat = round(mean(KED_rat, EED_rat), 0.5);
+56         
+57         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      6 at 51:23   2 at 52:24   6 at 54:15   6 at 54:21   2 at 55:16   2 at 55:22   
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 77 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+58         
+59         
+60         *** ------ STAR + PLUS prepare data
+60       ! ---------------------------------------------------------------------------------------
+60       ! -------------------;
+61         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+61       ! 2024\Program\2. Admin\Data\Temp_Data\STARPLUS_for_analysis.xlsx"
+62         	dbms=XLSX
+63         	out=STAR_PLUS
+64         	;
+65         	sheet="SP23_admin";
+66         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 29 observations and 97 variables.
+NOTE: WORK.STAR_PLUS data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+67         
+68         
+69         data STAR_PLUS;
+70         	set STAR_PLUS;
+71         	plancode = compress(plancode, "()");
+72         
+73         	cancer_rat_unround = mean(BCS_rat, CCS_rat);
+74         	BHcomp_rat_unround = mean(AMM_rat, FUH_rat);
+75         	COPD_rat_unround = mean(mean(PCEcort_rat, PCEbronch_rat), SPR_rat);
+76         	CDCcomp_rat_unround = mean(KED_rat, EED_rat);
+77         
+78         	cancer_rat = round(mean(BCS_rat, CCS_rat), 0.5);
+79         	BHcomp_rat = round(mean(AMM_rat, FUH_rat), 0.5);
+80         	COPD_rat = round(mean(mean(PCEcort_rat, PCEbronch_rat), SPR_rat), 0.5);
+81         	CDCcomp_rat = round(mean(KED_rat, EED_rat), 0.5);
+82         
+83         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      2 at 73:23   1 at 74:23   6 at 75:21   6 at 75:26   2 at 78:15   2 at 78:21   1 at 79:15
+      1 at 79:21   6 at 80:13   6 at 80:19   6 at 80:24   
+NOTE: There were 29 observations read from the data set WORK.STAR_PLUS.
+NOTE: The data set WORK.STAR_PLUS has 29 observations and 105 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+84         
+85         
+86         *** ------ STAR Kids prepare data
+86       ! ---------------------------------------------------------------------------------------
+86       ! -------------------;
+87         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+87       ! 2024\Program\2. Admin\Data\Temp_Data\STARKids_for_analysis.xlsx"
+88         	dbms=XLSX
+89         	out=STAR_Kids
+90         	;
+91         	sheet="SK23_admin";
+92         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 28 observations and 37 variables.
+NOTE: WORK.STAR_KIDS data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+93         
+94         data STAR_Kids;
+95         	set STAR_Kids;
+96         	plancode = compress(plancode, "()");
+97         
+98         	WCVcomp_rat_unround = mean(WCV11_rat,WCV17_rat);
+99         	WCVcomp_rat = round(mean(WCV11_rat,WCV17_rat), 0.5);
+100        
+101        run;
+
+NOTE: There were 28 observations read from the data set WORK.STAR_KIDS.
+NOTE: The data set WORK.STAR_KIDS has 28 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+102        
+103        
+104        proc contents data=STAR_Kids varnum;
+105        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.29 seconds
+      cpu time            0.04 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 1.
+
+106        
+107        /* Prepare for merged dataset */
+108        data IN02.SC_admin;
+109        	set STAR_Child;
+110        	keep plancode W3015_rat--vacc_rat;
+111        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set IN02.SC_ADMIN has 44 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+112        
+113        data IN02.SA_admin;
+114        	set STAR_Adult;
+115        	keep plancode PPCpre_rat--CDCcomp_rat;
+116        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set IN02.SA_ADMIN has 44 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+117        
+118        data IN02.SP_admin;
+119        	set STAR_Plus;
+120        	keep plancode AAP_rat--CDCcomp_rat;
+121        run;
+
+NOTE: There were 29 observations read from the data set WORK.STAR_PLUS.
+NOTE: The data set IN02.SP_ADMIN has 29 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+122        
+123        /* SK: Note that for APM, one is for survey, one is for admin*/
+124        data IN02.SK_admin;
+125        	set STAR_Kids;
+126        	rename APM_rat = APM_admin_rat;
+127        	keep plancode WCV11_rat--WCVcomp_rat;
+128        run;
+
+NOTE: There were 28 observations read from the data set WORK.STAR_KIDS.
+NOTE: The data set IN02.SK_ADMIN has 28 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+129        
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           2.80 seconds
+      cpu time            0.51 seconds
+      

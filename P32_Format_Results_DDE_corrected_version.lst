@@ -1,0 +1,802 @@
+                                          The SAS System    09:55 Wednesday, December 13, 2023   1
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.PLANCODE                 Observations          198
+           Member Type          DATA                          Variables             10 
+           Engine               V9                            Indexes               0  
+           Created              12/13/2023 09:55:13           Observation Length    112
+           Last Modified        12/13/2023 09:55:13           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            584                                                                   
+Obs in First Data Page      198                                                                   
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD20932_F2020-112-M19_\plancode.sas7bdat                       
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PLAN_ID          Num       8    BEST.                 PLAN_ID      
+             2    MCONAME          Char     37    $37.      $37.        MCONAME      
+             3    PROGRAM          Char     15    $15.      $15.        PROGRAM      
+             4    PLANCODE         Char      2    $2.       $2.         PLANCODE     
+             5    SERVICEAREA      Char     14    $14.      $14.        SERVICEAREA  
+             6    SHORTNAME        Char     12    $12.      $12.        SHORTNAME    
+             7    EFFECTIVEDATE    Num       8    DATE9.                EFFECTIVEDATE
+             8    INACTIVEDATE     Num       8    DATE9.                INACTIVEDATE 
+             9    STATUS           Char      1    $1.       $1.         STATUS       
+            10    SORTID           Char      1    $1.       $1.         SORTID       
+                                          The SAS System    09:55 Wednesday, December 13, 2023   2
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.STAR_CHILD               Observations          44 
+           Member Type          DATA                          Variables             73 
+           Engine               V9                            Indexes               0  
+           Created              12/13/2023 09:55:14           Observation Length    528
+           Last Modified        12/13/2023 09:55:14           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            124                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD20932_F2020-112-M19_\star_child.sas7bdat                     
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+            #    Variable          Type    Len    Format    Informat    Label
+
+            1    plancode          Char      4    $4.       $4.         plancode      
+            2    W3015_den         Num       8    BEST.                 W3015_den     
+            3    W3015             Num       8    BEST.                 W3015         
+            4    W3030_den         Num       8    BEST.                 W3030_den     
+            5    W3030             Num       8    BEST.                 W3030         
+            6    WCV11_den         Num       8    BEST.                 WCV11_den     
+            7    WCV11             Num       8    BEST.                 WCV11         
+            8    WCV17_den         Num       8    BEST.                 WCV17_den     
+            9    WCV17             Num       8    BEST.                 WCV17         
+           10    CIS_den           Num       8    BEST.                 CIS_den       
+           11    CIS               Num       8    BEST.                 CIS           
+           12    IMA_den           Num       8    BEST.                 IMA_den       
+           13    IMA               Num       8    BEST.                 IMA           
+           14    AMR               Num       8    BEST.                 AMR           
+           15    AMR_den           Num       8    BEST.                 AMR_den       
+           16    ADD_den           Num       8    BEST.                 ADD_den       
+           17    ADD               Num       8    BEST.                 ADD           
+           18    W30comp_all       Num       8    BEST.                 W30comp_all   
+           19    W30comp_den       Num       8    BEST.                 W30comp_den   
+           20    W3015_all         Num       8    BEST.                 W3015_all     
+           21    W3030_all         Num       8    BEST.                 W3030_all     
+           22    W30comp_err       Num       8    BEST.                 W30comp_err   
+           23    W30comp_ov_err    Num       8    BEST.                 W30comp_ov_err
+           24    W30comp_relb      Num       8    BEST.                 W30comp_relb  
+           25    W30comp           Num       8    BEST.                 W30comp       
+           26    WCVcomp_all       Num       8    BEST.                 WCVcomp_all   
+           27    WCVcomp_den       Num       8    BEST.                 WCVcomp_den   
+           28    WCV11_all         Num       8    BEST.                 WCV11_all     
+           29    WCV17_all         Num       8    BEST.                 WCV17_all     
+           30    WCVcomp_err       Num       8    BEST.                 WCVcomp_err   
+           31    WCVcomp_ov_err    Num       8    BEST.                 WCVcomp_ov_err
+           32    WCVcomp_relb      Num       8    BEST.                 WCVcomp_relb  
+           33    WCVcomp           Num       8    BEST.                 WCVcomp       
+           34    vacc_all          Num       8    BEST.                 vacc_all      
+           35    vacc_den          Num       8    BEST.                 vacc_den      
+           36    CIS_all           Num       8    BEST.                 CIS_all       
+           37    IMA_all           Num       8    BEST.                 IMA_all       
+           38    vacc_err          Num       8    BEST.                 vacc_err      
+           39    vacc_ov_err       Num       8    BEST.                 vacc_ov_err   
+           40    vacc_relb         Num       8    BEST.                 vacc_relb     
+           41    vacc              Num       8    BEST.                 vacc          
+           42    AMR_all           Num       8    BEST.                 AMR_all       
+           43    AMR_err           Num       8    BEST.                 AMR_err       
+           44    AMR_ov_err        Num       8    BEST.                 AMR_ov_err    
+           45    AMR_relb          Num       8    BEST.                 AMR_relb      
+           46    ADD_all           Num       8    BEST.                 ADD_all       
+           47    ADD_err           Num       8    BEST.                 ADD_err       
+           48    ADD_ov_err        Num       8    BEST.                 ADD_ov_err    
+           49    ADD_relb          Num       8    BEST.                 ADD_relb      
+           50    W3015_clust       Char      1    $1.       $1.         W3015_clust   
+           51    W3015_center      Num       8    BEST.                 W3015_center  
+           52    W3030_clust       Char      1    $1.       $1.         W3030_clust   
+           53    W3030_center      Num       8    BEST.                 W3030_center  
+           54    WCV11_clust       Char      1    $1.       $1.         WCV11_clust   
+           55    WCV11_center      Num       8    BEST.                 WCV11_center  
+           56    WCV17_clust       Char      1    $1.       $1.         WCV17_clust   
+           57    WCV17_center      Num       8    BEST.                 WCV17_center  
+           58    CIS_clust         Char      1    $1.       $1.         CIS_clust     
+           59    CIS_center        Num       8    BEST.                 CIS_center    
+           60    IMA_clust         Char      1    $1.       $1.         IMA_clust     
+           61    IMA_center        Num       8    BEST.                 IMA_center    
+           62    AMR_clust         Char      1    $1.       $1.         AMR_clust     
+           63    AMR_center        Num       8    BEST.                 AMR_center    
+           64    ADD_clust         Char      1    $1.       $1.         ADD_clust     
+           65    ADD_center        Num       8    BEST.                 ADD_center    
+           66    W3015_rat         Num       8    BEST.                 W3015_rat     
+           67    W3030_rat         Num       8    BEST.                 W3030_rat     
+           68    WCV11_rat         Num       8    BEST.                 WCV11_rat     
+           69    WCV17_rat         Num       8    BEST.                 WCV17_rat     
+           70    CIS_rat           Num       8    BEST.                 CIS_rat       
+           71    IMA_rat           Num       8    BEST.                 IMA_rat       
+           72    AMR_rat           Num       8    BEST.                 AMR_rat       
+           73    ADD_rat           Num       8    BEST.                 ADD_rat       
+                                          The SAS System    09:55 Wednesday, December 13, 2023   3
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.STAR_ADULT               Observations          44 
+           Member Type          DATA                          Variables             73 
+           Engine               V9                            Indexes               0  
+           Created              12/13/2023 09:55:14           Observation Length    528
+           Last Modified        12/13/2023 09:55:14           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            124                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD20932_F2020-112-M19_\star_adult.sas7bdat                     
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+            #    Variable          Type    Len    Format    Informat    Label
+
+            1    plancode          Char      4    $4.       $4.         plancode      
+            2    PPCpre_den        Num       8    BEST.                 PPCpre_den    
+            3    PPCpre            Num       8    BEST.                 PPCpre        
+            4    PPCpost_den       Num       8    BEST.                 PPCpost_den   
+            5    PPCpost           Num       8    BEST.                 PPCpost       
+            6    AAP_den           Num       8    BEST.                 AAP_den       
+            7    AAP               Num       8    BEST.                 AAP           
+            8    CCS_den           Num       8    BEST.                 CCS_den       
+            9    CCS               Num       8    BEST.                 CCS           
+           10    AMM_den           Num       8    BEST.                 AMM_den       
+           11    AMM               Num       8    BEST.                 AMM           
+           12    FUH_den           Num       8    BEST.                 FUH_den       
+           13    FUH               Num       8    BEST.                 FUH           
+           14    KED_den           Num       8    BEST.                 KED_den       
+           15    KED               Num       8    BEST.                 KED           
+           16    EED_den           Num       8    BEST.                 EED_den       
+           17    EED               Num       8    BEST.                 EED           
+           18    PPCpre_all        Num       8    BEST.                 PPCpre_all    
+           19    PPCpre_err        Num       8    BEST.                 PPCpre_err    
+           20    PPCpre_ov_err     Num       8    BEST.                 PPCpre_ov_err 
+           21    PPCpre_relb       Num       8    BEST.                 PPCpre_relb   
+           22    PPCpost_all       Num       8    BEST.                 PPCpost_all   
+           23    PPCpost_err       Num       8    BEST.                 PPCpost_err   
+           24    PPCpost_ov_err    Num       8    BEST.                 PPCpost_ov_err
+           25    PPCpost_relb      Num       8    BEST.                 PPCpost_relb  
+           26    AAP_all           Num       8    BEST.                 AAP_all       
+           27    AAP_err           Num       8    BEST.                 AAP_err       
+           28    AAP_ov_err        Num       8    BEST.                 AAP_ov_err    
+           29    AAP_relb          Num       8    BEST.                 AAP_relb      
+           30    CCS_all           Num       8    BEST.                 CCS_all       
+           31    CCS_err           Num       8    BEST.                 CCS_err       
+           32    CCS_ov_err        Num       8    BEST.                 CCS_ov_err    
+           33    CCS_relb          Num       8    BEST.                 CCS_relb      
+           34    BHcomp_all        Num       8    BEST.                 BHcomp_all    
+           35    BHcomp_den        Num       8    BEST.                 BHcomp_den    
+           36    AMM_all           Num       8    BEST.                 AMM_all       
+           37    FUH_all           Num       8    BEST.                 FUH_all       
+           38    BHcomp_err        Num       8    BEST.                 BHcomp_err    
+           39    BHcomp_ov_err     Num       8    BEST.                 BHcomp_ov_err 
+           40    BHcomp_relb       Num       8    BEST.                 BHcomp_relb   
+           41    BHcomp            Num       8    BEST.                 BHcomp        
+           42    CDCcomp_all       Num       8    BEST.                 CDCcomp_all   
+           43    CDCcomp_den       Num       8    BEST.                 CDCcomp_den   
+           44    KED_all           Num       8    BEST.                 KED_all       
+           45    EED_all           Num       8    BEST.                 EED_all       
+           46    CDCcomp_err       Num       8    BEST.                 CDCcomp_err   
+           47    CDCcomp_ov_err    Num       8    BEST.                 CDCcomp_ov_err
+           48    CDCcomp_relb      Num       8    BEST.                 CDCcomp_relb  
+           49    CDCcomp           Num       8    BEST.                 CDCcomp       
+           50    PPCpre_clust      Char      1    $1.       $1.         PPCpre_clust  
+           51    PPCpre_center     Num       8    BEST.                 PPCpre_center 
+           52    PPCpost_clust     Char      1    $1.       $1.         PPCpost_clust 
+           53    PPCpost_center    Num       8    BEST.                 PPCpost_center
+           54    AAP_clust         Char      1    $1.       $1.         AAP_clust     
+           55    AAP_center        Num       8    BEST.                 AAP_center    
+           56    CCS_clust         Char      1    $1.       $1.         CCS_clust     
+           57    CCS_center        Num       8    BEST.                 CCS_center    
+           58    AMM_clust         Char      1    $1.       $1.         AMM_clust     
+           59    AMM_center        Num       8    BEST.                 AMM_center    
+           60    FUH_clust         Char      1    $1.       $1.         FUH_clust     
+           61    FUH_center        Num       8    BEST.                 FUH_center    
+           62    KED_clust         Char      1    $1.       $1.         KED_clust     
+           63    KED_center        Num       8    BEST.                 KED_center    
+           64    EED_clust         Char      1    $1.       $1.         EED_clust     
+           65    EED_center        Num       8    BEST.                 EED_center    
+           66    PPCpre_rat        Num       8    BEST.                 PPCpre_rat    
+           67    PPCpost_rat       Num       8    BEST.                 PPCpost_rat   
+           68    AAP_rat           Num       8    BEST.                 AAP_rat       
+           69    CCS_rat           Num       8    BEST.                 CCS_rat       
+           70    AMM_rat           Num       8    BEST.                 AMM_rat       
+           71    FUH_rat           Num       8    BEST.                 FUH_rat       
+           72    KED_rat           Num       8    BEST.                 KED_rat       
+           73    EED_rat           Num       8    BEST.                 EED_rat       
+                                          The SAS System    09:55 Wednesday, December 13, 2023   4
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.STARPLUS                 Observations          29 
+           Member Type          DATA                          Variables             97 
+           Engine               V9                            Indexes               0  
+           Created              12/13/2023 09:55:14           Observation Length    696
+           Last Modified        12/13/2023 09:55:14           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            94                                                                    
+Obs in First Data Page      29                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD20932_F2020-112-M19_\starplus.sas7bdat                       
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+          #    Variable            Type    Len    Format    Informat    Label
+
+          1    plancode            Char      4    $4.       $4.         plancode        
+          2    AAP_den             Num       8    BEST.                 AAP_den         
+          3    AAP                 Num       8    BEST.                 AAP             
+          4    BCS_den             Num       8    BEST.                 BCS_den         
+          5    BCS                 Num       8    BEST.                 BCS             
+          6    CCS_den             Num       8    BEST.                 CCS_den         
+          7    CCS                 Num       8    BEST.                 CCS             
+          8    AMM_den             Num       8    BEST.                 AMM_den         
+          9    AMM                 Num       8    BEST.                 AMM             
+         10    FUH_den             Num       8    BEST.                 FUH_den         
+         11    FUH                 Num       8    BEST.                 FUH             
+         12    IET_den             Num       8    BEST.                 IET_den         
+         13    IET                 Num       8    BEST.                 IET             
+         14    PCEbronch_den       Num       8    BEST.                 PCEbronch_den   
+         15    PCEbronch           Num       8    BEST.                 PCEbronch       
+         16    PCEcort_den         Num       8    BEST.                 PCEcort_den     
+         17    PCEcort             Num       8    BEST.                 PCEcort         
+         18    SPR_den             Num       8    BEST.                 SPR_den         
+         19    SPR                 Num       8    BEST.                 SPR             
+         20    KED_den             Num       8    BEST.                 KED_den         
+         21    KED                 Num       8    BEST.                 KED             
+         22    EED_den             Num       8    BEST.                 EED_den         
+         23    EED                 Num       8    BEST.                 EED             
+         24    AAP_all             Num       8    BEST.                 AAP_all         
+         25    AAP_err             Num       8    BEST.                 AAP_err         
+         26    AAP_ov_err          Num       8    BEST.                 AAP_ov_err      
+         27    AAP_relb            Num       8    BEST.                 AAP_relb        
+         28    cancer_all          Num       8    BEST.                 cancer_all      
+         29    cancer_den          Num       8    BEST.                 cancer_den      
+         30    BCS_all             Num       8    BEST.                 BCS_all         
+         31    CCS_all             Num       8    BEST.                 CCS_all         
+         32    cancer_err          Num       8    BEST.                 cancer_err      
+         33    cancer_ov_err       Num       8    BEST.                 cancer_ov_err   
+         34    cancer_relb         Num       8    BEST.                 cancer_relb     
+         35    cancer              Num       8    BEST.                 cancer          
+         36    BHcomp_all          Num       8    BEST.                 BHcomp_all      
+         37    BHcomp_den          Num       8    BEST.                 BHcomp_den      
+         38    AMM_all             Num       8    BEST.                 AMM_all         
+         39    FUH_all             Num       8    BEST.                 FUH_all         
+         40    BHcomp_err          Num       8    BEST.                 BHcomp_err      
+         41    BHcomp_ov_err       Num       8    BEST.                 BHcomp_ov_err   
+         42    BHcomp_relb         Num       8    BEST.                 BHcomp_relb     
+         43    BHcomp              Num       8    BEST.                 BHcomp          
+         44    IET_all             Num       8    BEST.                 IET_all         
+         45    IET_err             Num       8    BEST.                 IET_err         
+         46    IET_ov_err          Num       8    BEST.                 IET_ov_err      
+         47    IET_relb            Num       8    BEST.                 IET_relb        
+         48    COPD_all            Num       8    BEST.                 COPD_all        
+         49    COPD_den            Num       8    BEST.                 COPD_den        
+         50    PCEbronch_all       Num       8    BEST.                 PCEbronch_all   
+         51    PCEcort_all         Num       8    BEST.                 PCEcort_all     
+         52    SPR_all             Num       8    BEST.                 SPR_all         
+         53    COPD_err            Num       8    BEST.                 COPD_err        
+         54    COPD_ov_err         Num       8    BEST.                 COPD_ov_err     
+         55    COPD_relb           Num       8    BEST.                 COPD_relb       
+         56    COPD                Num       8    BEST.                 COPD            
+         57    CDCcomp_all         Num       8    BEST.                 CDCcomp_all     
+         58    CDCcomp_den         Num       8    BEST.                 CDCcomp_den     
+         59    KED_all             Num       8    BEST.                 KED_all         
+         60    EED_all             Num       8    BEST.                 EED_all         
+         61    CDCcomp_err         Num       8    BEST.                 CDCcomp_err     
+         62    CDCcomp_ov_err      Num       8    BEST.                 CDCcomp_ov_err  
+         63    CDCcomp_relb        Num       8    BEST.                 CDCcomp_relb    
+         64    CDCcomp             Num       8    BEST.                 CDCcomp         
+         65    AAP_clust           Char      1    $1.       $1.         AAP_clust       
+         66    AAP_center          Num       8    BEST.                 AAP_center      
+         67    BCS_clust           Char      1    $1.       $1.         BCS_clust       
+         68    BCS_center          Num       8    BEST.                 BCS_center      
+         69    CCS_clust           Char      1    $1.       $1.         CCS_clust       
+         70    CCS_center          Num       8    BEST.                 CCS_center      
+         71    AMM_clust           Char      1    $1.       $1.         AMM_clust       
+         72    AMM_center          Num       8    BEST.                 AMM_center      
+         73    FUH_clust           Char      1    $1.       $1.         FUH_clust       
+         74    FUH_center          Num       8    BEST.                 FUH_center      
+         75    IET_clust           Char      1    $1.       $1.         IET_clust       
+         76    IET_center          Num       8    BEST.                 IET_center      
+         77    PCEbronch_clust     Char      1    $1.       $1.         PCEbronch_clust 
+         78    PCEbronch_center    Num       8    BEST.                 PCEbronch_center
+         79    PCEcort_clust       Char      1    $1.       $1.         PCEcort_clust   
+         80    PCEcort_center      Num       8    BEST.                 PCEcort_center  
+         81    SPR_clust           Char      1    $1.       $1.         SPR_clust       
+         82    SPR_center          Num       8    BEST.                 SPR_center      
+         83    KED_clust           Char      1    $1.       $1.         KED_clust       
+         84    KED_center          Num       8    BEST.                 KED_center      
+         85    EED_clust           Char      1    $1.       $1.         EED_clust       
+         86    EED_center          Num       8    BEST.                 EED_center      
+         87    AAP_rat             Num       8    BEST.                 AAP_rat         
+         88    BCS_rat             Num       8    BEST.                 BCS_rat         
+         89    CCS_rat             Num       8    BEST.                 CCS_rat         
+         90    AMM_rat             Num       8    BEST.                 AMM_rat         
+         91    FUH_rat             Num       8    BEST.                 FUH_rat         
+         92    IET_rat             Num       8    BEST.                 IET_rat         
+         93    PCEbronch_rat       Num       8    BEST.                 PCEbronch_rat   
+         94    PCEcort_rat         Num       8    BEST.                 PCEcort_rat     
+         95    SPR_rat             Num       8    BEST.                 SPR_rat         
+         96    KED_rat             Num       8    BEST.                 KED_rat         
+         97    EED_rat             Num       8    BEST.                 EED_rat         
+                                          The SAS System    09:55 Wednesday, December 13, 2023   5
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.STARKIDS                 Observations          28 
+           Member Type          DATA                          Variables             37 
+           Engine               V9                            Indexes               0  
+           Created              12/13/2023 09:55:15           Observation Length    264
+           Last Modified        12/13/2023 09:55:15           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            248                                                                   
+Obs in First Data Page      28                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD20932_F2020-112-M19_\starkids.sas7bdat                       
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+              #    Variable        Type    Len    Format    Informat    Label
+
+              1    plancode        Char      4    $4.       $4.         plancode    
+              2    WCV11_den       Num       8    BEST.                 WCV11_den   
+              3    WCV11           Num       8    BEST.                 WCV11       
+              4    WCV17_den       Num       8    BEST.                 WCV17_den   
+              5    WCV17           Num       8    BEST.                 WCV17       
+              6    FUH_den         Num       8    BEST.                 FUH_den     
+              7    FUH             Num       8    BEST.                 FUH         
+              8    APM_den         Num       8    BEST.                 APM_den     
+              9    APM             Num       8    BEST.                 APM         
+             10    WCV_all         Num       8    BEST.                 WCV_all     
+             11    WCV_den         Num       8    BEST.                 WCV_den     
+             12    WCV11_all       Num       8    BEST.                 WCV11_all   
+             13    WCV17_all       Num       8    BEST.                 WCV17_all   
+             14    WCV_err         Num       8    BEST.                 WCV_err     
+             15    WCV_ov_err      Num       8    BEST.                 WCV_ov_err  
+             16    WCV_relb        Num       8    BEST.                 WCV_relb    
+             17    WCV             Num       8    BEST.                 WCV         
+             18    FUH_all         Num       8    BEST.                 FUH_all     
+             19    FUH_err         Num       8    BEST.                 FUH_err     
+             20    FUH_ov_err      Num       8    BEST.                 FUH_ov_err  
+             21    FUH_relb        Num       8    BEST.                 FUH_relb    
+             22    APM_all         Num       8    BEST.                 APM_all     
+             23    APM_err         Num       8    BEST.                 APM_err     
+             24    APM_ov_err      Num       8    BEST.                 APM_ov_err  
+             25    APM_relb        Num       8    BEST.                 APM_relb    
+             26    WCV11_clust     Char      1    $1.       $1.         WCV11_clust 
+             27    WCV11_center    Num       8    BEST.                 WCV11_center
+             28    WCV17_clust     Char      1    $1.       $1.         WCV17_clust 
+             29    WCV17_center    Num       8    BEST.                 WCV17_center
+             30    FUH_clust       Char      1    $1.       $1.         FUH_clust   
+             31    FUH_center      Num       8    BEST.                 FUH_center  
+             32    APM_clust       Char      1    $1.       $1.         APM_clust   
+             33    APM_center      Num       8    BEST.                 APM_center  
+             34    WCV11_rat       Num       8    BEST.                 WCV11_rat   
+             35    WCV17_rat       Num       8    BEST.                 WCV17_rat   
+             36    FUH_rat         Num       8    BEST.                 FUH_rat     
+             37    APM_rat         Num       8    BEST.                 APM_rat     
+                                          The SAS System    09:55 Wednesday, December 13, 2023   6
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                           Missing    Nonmissing
+                 Variable       Label           Levels      Levels        Levels
+                 ---------------------------------------------------------------
+                 W30comp_rat                        10           1             9
+                 WCVcomp_rat                         9           1             8
+                 vacc_rat                            9           1             8
+                 AMR_center     AMR_center           6           1             5
+                 AMR_rat        AMR_rat              6           1             5
+                 ADD_center     ADD_center           6           1             5
+                 ADD_rat        ADD_rat              6           1             5
+
+
+                                                         Cumulative    Cumulative
+                 W30comp_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                           1           1        2.44             1         2.44  
+                         1.5           6       14.63             7        17.07  
+                           2           3        7.32            10        24.39  
+                         2.5           9       21.95            19        46.34  
+                           3          10       24.39            29        70.73  
+                         3.5           4        9.76            33        80.49  
+                           4           1        2.44            34        82.93  
+                         4.5           6       14.63            40        97.56  
+                           5           1        2.44            41       100.00  
+
+                                       Frequency Missing = 3
+
+
+                                                         Cumulative    Cumulative
+                 WCVcomp_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                         1.5           5       11.63             5        11.63  
+                           2           6       13.95            11        25.58  
+                         2.5           5       11.63            16        37.21  
+                           3           6       13.95            22        51.16  
+                         3.5           6       13.95            28        65.12  
+                           4           3        6.98            31        72.09  
+                         4.5           6       13.95            37        86.05  
+                           5           6       13.95            43       100.00  
+
+                                       Frequency Missing = 1
+
+
+                                                       Cumulative    Cumulative
+                  vacc_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         1           1        2.38             1         2.38  
+                       1.5           3        7.14             4         9.52  
+                         2           8       19.05            12        28.57  
+                       2.5           6       14.29            18        42.86  
+                         3           9       21.43            27        64.29  
+                       3.5           7       16.67            34        80.95  
+                         4           3        7.14            37        88.10  
+                       4.5           5       11.90            42       100.00  
+
+                                      Frequency Missing = 2
+
+
+                                                               Cumulative    Cumulative
+             AMR_center    AMR_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.5345246391          1           2        5.56             2         5.56  
+            0.614129767          2           4       11.11             6        16.67  
+           0.6694888822          3          17       47.22            23        63.89  
+             0.72469248          4          10       27.78            33        91.67  
+           0.7888320519          5           3        8.33            36       100.00  
+
+                                       Frequency Missing = 8
+
+
+                                                               Cumulative    Cumulative
+             ADD_center    ADD_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.3484269757          1           4       10.81             4        10.81  
+           0.3796523858          2          11       29.73            15        40.54  
+           0.4151985356          3          15       40.54            30        81.08  
+           0.4941395319          4           4       10.81            34        91.89  
+            0.541697447          5           3        8.11            37       100.00  
+
+                                       Frequency Missing = 7
+                                          The SAS System    09:55 Wednesday, December 13, 2023   7
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                               Missing    Nonmissing
+              Variable          Label               Levels      Levels        Levels
+              ----------------------------------------------------------------------
+              PPCpre_center     PPCpre_center            6           1             5
+              PPCpre_rat        PPCpre_rat               6           1             5
+              PPCpost_center    PPCpost_center           6           1             5
+              PPCpost_rat       PPCpost_rat              6           1             5
+              AAP_center        AAP_center               5           0             5
+              AAP_rat           AAP_rat                  5           0             5
+              CCS_center        CCS_center               6           1             5
+              CCS_rat           CCS_rat                  6           1             5
+              BHcomp_rat                                 8           1             7
+              CDCcomp_rat                                7           1             6
+
+
+                                                                 Cumulative    Cumulative
+         PPCpre_center    PPCpre_rat    Frequency     Percent     Frequency      Percent
+         --------------------------------------------------------------------------------
+          0.6446569721             1           2        5.13             2         5.13  
+          0.7042360659           1.5           8       20.51            10        25.64  
+          0.7434950414             2          14       35.90            24        61.54  
+          0.7766165121             3          13       33.33            37        94.87  
+          0.8187063937             4           2        5.13            39       100.00  
+
+                                       Frequency Missing = 5
+
+
+                                                                  Cumulative    Cumulative
+        PPCpost_center    PPCpost_rat    Frequency     Percent     Frequency      Percent
+        ----------------------------------------------------------------------------------
+           0.596513629              1           6       15.79             6        15.79  
+          0.6545030481            1.5           8       21.05            14        36.84  
+          0.6849452494              2          12       31.58            26        68.42  
+           0.705859596              3           7       18.42            33        86.84  
+          0.7437090843              4           5       13.16            38       100.00  
+
+                                       Frequency Missing = 6
+
+
+                                                               Cumulative    Cumulative
+             AAP_center    AAP_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.5423709665          1           3        6.82             3         6.82  
+           0.5803200172        1.5           9       20.45            12        27.27  
+           0.6200617901          2          11       25.00            23        52.27  
+            0.659041995          3           9       20.45            32        72.73  
+           0.6919259472          4          12       27.27            44       100.00  
+
+
+                                                               Cumulative    Cumulative
+             CCS_center    CCS_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.4724272508          1           4        9.52             4         9.52  
+           0.5259654605          2           9       21.43            13        30.95  
+           0.5632826895          3          15       35.71            28        66.67  
+           0.6079250167          4           7       16.67            35        83.33  
+           0.6619741043          5           7       16.67            42       100.00  
+
+                                       Frequency Missing = 2
+
+
+                                                        Cumulative    Cumulative
+                 BHcomp_rat    Frequency     Percent     Frequency      Percent
+                 ---------------------------------------------------------------
+                          1           1        2.63             1         2.63  
+                        1.5           2        5.26             3         7.89  
+                          2           5       13.16             8        21.05  
+                        2.5          13       34.21            21        55.26  
+                          3           6       15.79            27        71.05  
+                        3.5           9       23.68            36        94.74  
+                          4           2        5.26            38       100.00  
+
+                                      Frequency Missing = 6
+
+
+                                                         Cumulative    Cumulative
+                 CDCcomp_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                           1           2        4.76             2         4.76  
+                         1.5          16       38.10            18        42.86  
+                           2           8       19.05            26        61.90  
+                         2.5          12       28.57            38        90.48  
+                           3           2        4.76            40        95.24  
+                         3.5           2        4.76            42       100.00  
+
+                                       Frequency Missing = 2
+                                          The SAS System    09:55 Wednesday, December 13, 2023   8
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                           Missing    Nonmissing
+                 Variable       Label           Levels      Levels        Levels
+                 ---------------------------------------------------------------
+                 AAP_center     AAP_center           5           0             5
+                 AAP_rat        AAP_rat              5           0             5
+                 cancer_rat                          8           1             7
+                 BHcomp_rat                          8           1             7
+                 IET_center     IET_center           6           1             5
+                 IET_rat        IET_rat              6           1             5
+                 COPD_rat                            8           1             7
+                 CDCcomp_rat                         8           0             8
+
+
+                                                               Cumulative    Cumulative
+             AAP_center    AAP_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.6922402455          2           1        3.45             1         3.45  
+           0.7463159742          3           7       24.14             8        27.59  
+           0.7835449252          4          10       34.48            18        62.07  
+           0.8231728139        4.5           9       31.03            27        93.10  
+           0.8863694307          5           2        6.90            29       100.00  
+
+
+                                                        Cumulative    Cumulative
+                 cancer_rat    Frequency     Percent     Frequency      Percent
+                 ---------------------------------------------------------------
+                          1           4       14.81             4        14.81  
+                        1.5           5       18.52             9        33.33  
+                          2           8       29.63            17        62.96  
+                        2.5           4       14.81            21        77.78  
+                          3           2        7.41            23        85.19  
+                        3.5           3       11.11            26        96.30  
+                          4           1        3.70            27       100.00  
+
+                                      Frequency Missing = 2
+
+
+                                                        Cumulative    Cumulative
+                 BHcomp_rat    Frequency     Percent     Frequency      Percent
+                 ---------------------------------------------------------------
+                        1.5           1        3.57             1         3.57  
+                          2           1        3.57             2         7.14  
+                        2.5           5       17.86             7        25.00  
+                          3           8       28.57            15        53.57  
+                        3.5          10       35.71            25        89.29  
+                          4           1        3.57            26        92.86  
+                        4.5           2        7.14            28       100.00  
+
+                                      Frequency Missing = 1
+
+
+                                                               Cumulative    Cumulative
+             IET_center    IET_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.3548342653          1           3       11.11             3        11.11  
+           0.4043868318          2           5       18.52             8        29.63  
+           0.4377031326          3           8       29.63            16        59.26  
+           0.4807320324          4           8       29.63            24        88.89  
+           0.5147250248          5           3       11.11            27       100.00  
+
+                                       Frequency Missing = 2
+
+
+                                                       Cumulative    Cumulative
+                  COPD_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         1           1        4.35             1         4.35  
+                         2           3       13.04             4        17.39  
+                       2.5           4       17.39             8        34.78  
+                         3           8       34.78            16        69.57  
+                       3.5           4       17.39            20        86.96  
+                         4           2        8.70            22        95.65  
+                       4.5           1        4.35            23       100.00  
+
+                                      Frequency Missing = 6
+
+
+                                                         Cumulative    Cumulative
+                 CDCcomp_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                           1           3       10.34             3        10.34  
+                         1.5           4       13.79             7        24.14  
+                           2           6       20.69            13        44.83  
+                         2.5           3       10.34            16        55.17  
+                           3           6       20.69            22        75.86  
+                         3.5           4       13.79            26        89.66  
+                           4           2        6.90            28        96.55  
+                         4.5           1        3.45            29       100.00  
+                                          The SAS System    09:55 Wednesday, December 13, 2023   9
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                           Missing    Nonmissing
+                 Variable       Label           Levels      Levels        Levels
+                 ---------------------------------------------------------------
+                 WCVcomp_rat                         7           0             7
+                 FUH_center     FUH_center           6           1             5
+                 FUH_rat        FUH_rat              6           1             5
+                 APM_center     APM_center           6           1             5
+                 APM_rat        APM_rat              6           1             5
+
+
+                                                         Cumulative    Cumulative
+                 WCVcomp_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                           2           5       17.86             5        17.86  
+                         2.5           4       14.29             9        32.14  
+                           3           4       14.29            13        46.43  
+                         3.5           3       10.71            16        57.14  
+                           4           5       17.86            21        75.00  
+                         4.5           2        7.14            23        82.14  
+                           5           5       17.86            28       100.00  
+
+
+                                                               Cumulative    Cumulative
+             FUH_center    FUH_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.2274393887          1           3       14.29             3        14.29  
+           0.3403557723          2           4       19.05             7        33.33  
+           0.3993362126          3           7       33.33            14        66.67  
+            0.496124031          4           1        4.76            15        71.43  
+           0.6043691281          5           6       28.57            21       100.00  
+
+                                       Frequency Missing = 7
+
+
+                                                               Cumulative    Cumulative
+             APM_center    APM_rat    Frequency     Percent     Frequency      Percent
+           ----------------------------------------------------------------------------
+           0.2402473408          1           2        8.00             2         8.00  
+           0.2993955036          2           5       20.00             7        28.00  
+           0.3596655221          3           5       20.00            12        48.00  
+           0.3952677191          4           7       28.00            19        76.00  
+           0.4483312886          5           6       24.00            25       100.00  
+
+                                       Frequency Missing = 3

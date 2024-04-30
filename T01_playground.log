@@ -1,0 +1,131 @@
+1                                         The SAS System          11:11 Thursday, February 1, 2024
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.2
+      SAS/ETS 15.2
+      SAS/OR 15.2
+      SAS/IML 15.2
+      SAS/QC 15.2
+
+NOTE: Additional host information:
+
+ X64_10PRO WIN 10.0.19041  Workstation
+
+NOTE: SAS initialization used:
+      real time           0.79 seconds
+      cpu time            0.48 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN;
+2          
+3          
+4          LIBNAME QOC22 "C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2.
+4        ! Admin\Data\Raw_Data";
+NOTE: Libref QOC22 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2. 
+      Admin\Data\Raw_Data
+5          LIBNAME OUT "C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2.
+5        ! Admin\Data\Temp_Data";
+NOTE: Libref OUT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2. 
+      Admin\Data\Temp_Data
+6          LIBNAME QOC21 "C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\old\2.
+6        ! Admin\Data\Raw_Data";
+NOTE: Libref QOC21 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\old\2. 
+      Admin\Data\Raw_Data
+7          
+8          proc sql;
+9          	select distinct Measurename
+10         	from QOC22.STAR_HEDIS_ALL
+11         quit;
+12         
+13         /* proc sql;
+14             select distinct SubmeasureName
+15             from QOC22.STARPLUS_HEDIS_ALL
+16             order by SubmeasureName
+17         	;
+18         quit;
+19          */
+NOTE: The PROCEDURE SQL printed page 1.
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.09 seconds
+      
+
+20         proc sql;
+21         	select distinct SubmeasureName
+22         	from QOC22.STAR_HEDIS_ALL
+23         	where Measurename = "HbA1c C Non-MCR MY22 (HBDMY22B)";
+24         quit;
+NOTE: The PROCEDURE SQL printed page 2.
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.00 seconds
+      
+
+25         
+26         
+27         
+28         
+29         * playground;
+30         
+31         /* %LET JOB = T01;
+32         
+33         LIBNAME QOC22 "..\Data\Raw_Data";
+34         
+35         data df_QOC22;
+36         	set qoc22.star_hedis_all;
+37         run;
+38         
+39         proc contents data=df_QOC22 varnum;
+40         run;
+41         
+42         
+43         proc freq data=df_QOC22;
+44         	table measurename;
+45         run;
+46         
+47         
+48         ods html file="&job..html";
+49         
+50         
+51         proc sql;
+52         	select distinct Measurename, SubmeasureName
+53         	from df_QOC22
+54         	where PopulationName = 'ALL' and SUPPLEMENTAL_NUMERATOR > 0
+55         	;
+56         quit;
+57         
+58         proc print data=df_QOC22;
+59         	where Measurename = "Pren Post Care MY22 (PPCMY22)";
+60         	var
+61         		PopulationName
+62         		FlowchartName
+63         		Measurename
+64         		SubmeasureName
+65         		ADMINISTRATIVE_NUMERATOR
+66         		SUPPLEMENTAL_NUMERATOR
+67         		Numer
+68         		Denom
+69         		rate
+70         		;
+71         run;
+72         
+73         ods html close; */
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           1.00 seconds
+      cpu time            0.59 seconds
+      

@@ -1,0 +1,77 @@
+                                          The SAS System       23:34 Sunday, December 10, 2023   1
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.STAR_KIDS                Observations          28 
+           Member Type          DATA                          Variables             39 
+           Engine               V9                            Indexes               0  
+           Created              12/10/2023 23:34:48           Observation Length    280
+           Last Modified        12/10/2023 23:34:48           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            233                                                                   
+Obs in First Data Page      28                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\JIANG~1.SHA\AppData\Local\Temp\SAS Temporary                 
+                            Files\_TD19044_F2020-112-M19_\star_kids.sas7bdat                      
+Release Created             9.0401M7                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\jiang.shao                                                       
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+           #    Variable               Type    Len    Format    Informat    Label
+
+           1    plancode               Char      4    $4.       $4.         plancode    
+           2    WCV11_den              Num       8    BEST.                 WCV11_den   
+           3    WCV11                  Num       8    BEST.                 WCV11       
+           4    WCV17_den              Num       8    BEST.                 WCV17_den   
+           5    WCV17                  Num       8    BEST.                 WCV17       
+           6    FUH_den                Num       8    BEST.                 FUH_den     
+           7    FUH                    Num       8    BEST.                 FUH         
+           8    APM_den                Num       8    BEST.                 APM_den     
+           9    APM                    Num       8    BEST.                 APM         
+          10    WCV_all                Num       8    BEST.                 WCV_all     
+          11    WCV_den                Num       8    BEST.                 WCV_den     
+          12    WCV11_all              Num       8    BEST.                 WCV11_all   
+          13    WCV17_all              Num       8    BEST.                 WCV17_all   
+          14    WCV_err                Num       8    BEST.                 WCV_err     
+          15    WCV_ov_err             Num       8    BEST.                 WCV_ov_err  
+          16    WCV_relb               Num       8    BEST.                 WCV_relb    
+          17    WCV                    Num       8    BEST.                 WCV         
+          18    FUH_all                Num       8    BEST.                 FUH_all     
+          19    FUH_err                Num       8    BEST.                 FUH_err     
+          20    FUH_ov_err             Num       8    BEST.                 FUH_ov_err  
+          21    FUH_relb               Num       8    BEST.                 FUH_relb    
+          22    APM_all                Num       8    BEST.                 APM_all     
+          23    APM_err                Num       8    BEST.                 APM_err     
+          24    APM_ov_err             Num       8    BEST.                 APM_ov_err  
+          25    APM_relb               Num       8    BEST.                 APM_relb    
+          26    WCV11_clust            Char      1    $1.       $1.         WCV11_clust 
+          27    WCV11_center           Num       8    BEST.                 WCV11_center
+          28    WCV17_clust            Char      1    $1.       $1.         WCV17_clust 
+          29    WCV17_center           Num       8    BEST.                 WCV17_center
+          30    FUH_clust              Char      1    $1.       $1.         FUH_clust   
+          31    FUH_center             Num       8    BEST.                 FUH_center  
+          32    APM_clust              Char      1    $1.       $1.         APM_clust   
+          33    APM_center             Num       8    BEST.                 APM_center  
+          34    WCV11_rat              Num       8    BEST.                 WCV11_rat   
+          35    WCV17_rat              Num       8    BEST.                 WCV17_rat   
+          36    FUH_rat                Num       8    BEST.                 FUH_rat     
+          37    APM_rat                Num       8    BEST.                 APM_rat     
+          38    WCVcomp_rat_unround    Num       8                                      
+          39    WCVcomp_rat            Num       8                                      

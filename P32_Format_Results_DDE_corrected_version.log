@@ -1,0 +1,1987 @@
+1                                         The SAS System        09:55 Wednesday, December 13, 2023
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.2
+      SAS/ETS 15.2
+      SAS/OR 15.2
+      SAS/IML 15.2
+      SAS/QC 15.2
+
+NOTE: Additional host information:
+
+ X64_10PRO WIN 10.0.19041  Workstation
+
+NOTE: SAS initialization used:
+      real time           1.47 seconds
+      cpu time            0.49 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN noxwait noxsync;
+2          
+3          * Formatting results;
+4          * Using DDE technique;
+5          
+6          %LET JOB = P32;
+7          
+8          proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+8        ! 2024\Program\2. Admin\Data\raw_Data\plancode.xlsx"
+9          	dbms=XLSX
+10         	out=plancode
+11         	;
+12         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 198 observations and 10 variables.
+NOTE: WORK.PLANCODE data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.01 seconds
+      
+
+13         
+14         proc contents data=plancode varnum;
+15         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.30 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 1.
+
+16         
+17         
+18         *** ------ STAR Child prepare data
+18       ! ---------------------------------------------------------------------------------------
+18       ! -------------------;
+19         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+19       ! 2024\Program\2. Admin\Data\temp_Data\STAR_Child_for_analysis.xlsx"
+20         	dbms=XLSX
+21         	out=STAR_Child
+22         	;
+23         	sheet="SC23_admin";
+24         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 73 variables.
+NOTE: WORK.STAR_CHILD data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+25         
+26         proc contents data=STAR_Child varnum;
+27         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 2.
+
+28         
+29         data STAR_Child;
+30         	set STAR_Child;
+31         	plancode = compress(plancode, "()");
+32         	
+33         	W30comp_rat = round(mean(W3015_rat, W3030_rat), 0.5);
+34         	WCVcomp_rat = round(mean(WCV11_rat,WCV17_rat), 0.5);
+35         	vacc_rat = round(mean(CIS_rat, IMA_rat), 0.5);
+36         
+37         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      3 at 33:16   3 at 33:22   1 at 34:16   1 at 34:22   2 at 35:13   2 at 35:19   
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 76 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.00 seconds
+      
+
+38         
+39         proc sort data=STAR_Child; by plancode; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 76 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.01 seconds
+      
+
+40         
+41         data STAR_Child;
+42         	merge STAR_Child(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+43         	by plancode;
+44         	if a;
+45         run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 78 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+46         
+47         proc sort data=STAR_Child; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 78 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+48         
+49         
+50         *** ------ STAR Adult prepare data
+50       ! ---------------------------------------------------------------------------------------
+50       ! -------------------;
+51         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+51       ! 2024\Program\2. Admin\Data\Temp_Data\STAR_Adult_for_analysis.xlsx"
+52         	dbms=XLSX
+53         	out=STAR_Adult
+54         	;
+55         	sheet="SA23_admin";
+56         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 73 variables.
+NOTE: WORK.STAR_ADULT data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+57         
+58         proc contents data=STAR_Adult varnum;
+59         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 3.
+
+60         
+61         data STAR_Adult;
+62         	set STAR_Adult;
+63         	plancode = compress(plancode, "()");
+64         
+65         	BHcomp_rat = round(mean(AMM_rat, FUH_rat), 0.5);
+66         	CDCcomp_rat = round(mean(KED_rat, EED_rat), 0.5);
+67         
+68         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      6 at 65:15   6 at 65:21   2 at 66:16   2 at 66:22   
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 75 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+69         
+70         proc sort data=STAR_Adult; by plancode; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 75 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+71         
+72         data STAR_Adult;
+73         	merge STAR_Adult(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+74         	by plancode;
+75         	if a;
+76         run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 77 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+77         
+78         proc sort data=STAR_Adult; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 77 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+79         
+80         
+81         *** ------ STAR + PLUS prepare data
+81       ! ---------------------------------------------------------------------------------------
+81       ! -------------------;
+82         proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+82       ! 2024\Program\2. Admin\Data\Temp_Data\STARPLUS_for_analysis.xlsx"
+83         	dbms=XLSX
+84         	out=STARPLUS
+85         	;
+86         	sheet="SP23_admin";
+87         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 29 observations and 97 variables.
+NOTE: WORK.STARPLUS data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+88         
+89         proc contents data=STARPLUS varnum;
+90         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 4.
+
+91         
+92         data STARPLUS;
+93         	set STARPLUS;
+94         	plancode = compress(plancode, "()");
+95         
+96         	cancer_rat = round(mean(BCS_rat, CCS_rat), 0.5);
+97         	BHcomp_rat = round(mean(AMM_rat, FUH_rat), 0.5);
+98         	COPD_rat = round(mean(mean(PCEcort_rat, PCEbronch_rat), SPR_rat), 0.5);
+99         	CDCcomp_rat = round(mean(KED_rat, EED_rat), 0.5);
+100        
+101        run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      2 at 96:15   2 at 96:21   1 at 97:15   1 at 97:21   6 at 98:13   6 at 98:19   6 at 98:24
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 29 observations and 101 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+102        
+103        proc sort data=STARPLUS; by plancode; run;
+
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 29 observations and 101 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+104        
+105        data STARPLUS;
+106        	merge STARPLUS(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+107        	by plancode;
+108        	if a;
+109        run;
+
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STARPLUS has 29 observations and 103 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+110        
+111        proc sort data=STARPLUS; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 29 observations and 103 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+112        
+113        
+114        *** ------ STAR Kids prepare data
+114      ! ---------------------------------------------------------------------------------------
+114      ! -------------------;
+115        proc import datafile="C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card -
+115      ! 2024\Program\2. Admin\Data\Temp_Data\STARKids_for_analysis.xlsx"
+116        	dbms=XLSX
+117        	out=STARKids
+118        	;
+119        	sheet="SK23_admin";
+120        run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 28 observations and 37 variables.
+NOTE: WORK.STARKIDS data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.01 seconds
+      
+
+121        
+122        proc contents data=STARKids varnum;
+123        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 5.
+
+124        
+125        data STARKids;
+126        	set STARKids;
+127        	plancode = compress(plancode, "()");
+128        
+129        	WCVcomp_rat = round(mean(WCV11_rat,WCV17_rat), 0.5);
+130        
+131        run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 38 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+132        
+133        proc sort data=STARKids; by plancode; run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 38 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+134        
+135        data STARKids;
+136        	merge STARKids(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+137        	by plancode;
+138        	if a;
+139        run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STARKIDS has 28 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+140        
+141        proc sort data=STARKids; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 40 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+142        
+143        
+144        proc freq data=STAR_Child nlevels;
+145        	table W30comp_rat /list out=RG_SC_W30;
+146        	table WCVcomp_rat /list out=RG_SC_WCV;
+147        	table vacc_rat /list out=RG_SC_Vacc;
+148        	table AMR_center*AMR_rat /list out=RG_SC_AMR;
+149        	table ADD_center*ADD_rat /list out=RG_SC_ADD;
+150        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.RG_SC_W30 has 10 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_WCV has 9 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_VACC has 9 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_AMR has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SC_ADD has 6 observations and 4 variables.
+NOTE: The PROCEDURE FREQ printed page 6.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.03 seconds
+      
+
+151        
+152        proc freq data=STAR_Adult nlevels;
+153        	table PPCpre_center*PPCpre_rat /list out=RG_SA_PPCpre;
+154        	table PPCpost_center*PPCpost_rat /list out=RG_SA_PPCpost;
+155        	table AAP_center*AAP_rat /list out=RG_SA_AAP;
+156        	table CCS_center*CCS_rat /list out=RG_SA_CCS;
+157        	table BHcomp_rat /list out=RG_SA_BH;
+158        	table CDCcomp_rat /list out=RG_SA_CDCcomp;
+159        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.RG_SA_PPCPRE has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SA_PPCPOST has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SA_AAP has 5 observations and 4 variables.
+NOTE: The data set WORK.RG_SA_CCS has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SA_BH has 8 observations and 3 variables.
+NOTE: The data set WORK.RG_SA_CDCCOMP has 7 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 7.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.04 seconds
+      
+
+160        
+161        proc freq data=STARPLUS nlevels;
+162        	table AAP_center*AAP_rat /list out=RG_SP_AAP;
+163        	table cancer_rat /list out=RG_SP_Cancer;
+164        	table BHcomp_rat /list out=RG_SP_BH;
+165        	table IET_center*IET_rat /list out=RG_SP_IET;
+166        	table COPD_rat /list out=RG_SP_COPD;
+167        	table CDCcomp_rat /list out=RG_SP_CDCcomp;
+168        run;
+
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.RG_SP_AAP has 5 observations and 4 variables.
+NOTE: The data set WORK.RG_SP_CANCER has 8 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_BH has 8 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_IET has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SP_COPD has 8 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_CDCCOMP has 8 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 8.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.01 seconds
+      
+
+169        
+170        proc freq data=STARKids nlevels;
+171        	table WCVcomp_rat /list out=RG_SK_WCV;
+172        	table FUH_center*FUH_rat /list out=RG_SK_FUH;
+173        	table APM_center*APM_rat /list out=RG_SK_APM;
+174        run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.RG_SK_WCV has 7 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_FUH has 6 observations and 4 variables.
+NOTE: The data set WORK.RG_SK_APM has 6 observations and 4 variables.
+NOTE: The PROCEDURE FREQ printed page 9.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.00 seconds
+      
+
+175        
+176        
+177        
+178        ** ---- Exporting using DDE
+178      ! --------------------------------------------------------------------;
+179        filename ddeopen DDE 'Excel|system';
+180        
+181        * template file;
+182        x '"C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2.
+182      ! Admin\Data\Raw_Data\MCO Report Cards - Administrative Ratings Template
+182      ! wNoRating_2023.xlsx"';
+183        
+184        
+185        filename SC_W30 dde "Excel|STARChild_W30checkups!r3c1:r46c13" notab;
+186        data _null_;
+187        	set STAR_Child;
+188        	file SC_W30;
+189        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+190        		W3015_den '09'x W3015 '09'x W3015_center '09'x W3015_rat '09'x
+191        		W3030_den '09'x W3030 '09'x W3030_center '09'x W3030_rat '09'x
+192        		W30comp_relb '09'x W30comp_rat
+193        	;
+194        run;
+
+NOTE: The file SC_W30 is:
+      DDE Session,
+      SESSION=Excel|STARChild_W30checkups!r3c1:r46c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SC_W30.
+      The minimum record length was 64.
+      The maximum record length was 135.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+195        
+196        filename SC_WCV dde "Excel|STARChild_WCVcheckups!r3c1:r46c13" notab;
+197        data _null_;
+198        	set STAR_Child;
+199        	file SC_WCV;
+200        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+201        		WCV11_den '09'x WCV11 '09'x WCV11_center '09'x WCV11_rat '09'x
+202        		WCV17_den '09'x WCV17 '09'x WCV17_center '09'x WCV17_rat '09'x
+203        		WCVcomp_relb '09'x WCVcomp_rat
+204        	;
+205        run;
+
+NOTE: The file SC_WCV is:
+      DDE Session,
+      SESSION=Excel|STARChild_WCVcheckups!r3c1:r46c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SC_WCV.
+      The minimum record length was 73.
+      The maximum record length was 139.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+206        
+207        filename SC_VAC dde "Excel|STARChild_Vaccines!r3c1:r46c13" notab;
+208        data _null_;
+209        	set STAR_Child;
+210        	file SC_VAC;
+211        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+212        		CIS_den '09'x CIS '09'x CIS_center '09'x CIS_rat '09'x
+213        		IMA_den '09'x IMA '09'x IMA_center '09'x IMA_rat '09'x
+214        		vacc_relb '09'x vacc_rat
+215        	;
+216        run;
+
+NOTE: The file SC_VAC is:
+      DDE Session,
+      SESSION=Excel|STARChild_Vaccines!r3c1:r46c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SC_VAC.
+      The minimum record length was 64.
+      The maximum record length was 136.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+217        
+218        filename SC_AMR dde "Excel|STARChild_Asthma!r3c1:r46c8" notab;
+219        data _null_;
+220        	set STAR_Child;
+221        	file SC_AMR;
+222        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+223        		AMR_den '09'x AMR_center '09'x AMR_relb '09'x AMR '09'x AMR_rat
+224        	;
+225        run;
+
+NOTE: The file SC_AMR is:
+      DDE Session,
+      SESSION=Excel|STARChild_Asthma!r3c1:r46c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SC_AMR.
+      The minimum record length was 35.
+      The maximum record length was 93.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+226        
+227        filename SC_ADD dde "Excel|STARChild_ADD!r3c1:r46c8" notab;
+228        data _null_;
+229        	set STAR_Child;
+230        	file SC_ADD;
+231        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+232        		ADD_den '09'x ADD_center '09'x ADD_relb '09'x ADD '09'x ADD_rat
+233        	;
+234        run;
+
+NOTE: The file SC_ADD is:
+      DDE Session,
+      SESSION=Excel|STARChild_ADD!r3c1:r46c8,RECFM=V,
+      LRECL=32767
+
+NOTE: 44 records were written to the file SC_ADD.
+      The minimum record length was 35.
+      The maximum record length was 93.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+235        
+236        filename SA_Pre dde "Excel|STARAdult_Prenatal!r3c1:r46c8" notab;
+237        data _null_;
+238        	set STAR_Adult;
+239        	file SA_Pre;
+240        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+241        		PPCpre_den '09'x PPCpre_center '09'x PPCpre_relb '09'x PPCpre '09'x PPCpre_rat
+242        	;
+243        run;
+
+NOTE: The file SA_PRE is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Prenatal!r3c1:r46c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SA_PRE.
+      The minimum record length was 47.
+      The maximum record length was 94.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+244        
+245        filename SA_Pot dde "Excel|STARAdult_Postpartum!r3c1:r46c8" notab;
+246        data _null_;
+247        	set STAR_Adult;
+248        	file SA_Pot;
+249        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+250        		PPCpost_den '09'x PPCpost_center '09'x PPCpost_relb '09'x PPCpost '09'x PPCpost_rat
+251        	;
+252        run;
+
+NOTE: The file SA_POT is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Postpartum!r3c1:r46c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SA_POT.
+      The minimum record length was 47.
+      The maximum record length was 95.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+253        
+254        filename SA_CUP dde "Excel|STARAdult_Checkups!r3c1:r46c8" notab;
+255        data _null_;
+256        	set STAR_Adult;
+257        	file SA_CUP;
+258        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+259        		AAP_den '09'x AAP_center '09'x AAP_relb '09'x AAP '09'x AAP_rat
+260        	;
+261        run;
+
+NOTE: The file SA_CUP is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Checkups!r3c1:r46c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SA_CUP.
+      The minimum record length was 69.
+      The maximum record length was 94.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           2.19 seconds
+      cpu time            0.03 seconds
+      
+
+262        
+263        filename SA_CAN dde "Excel|STARAdult_Cancer!r3c1:r46c8" notab;
+264        data _null_;
+265        	set STAR_Adult;
+266        	file SA_CAN;
+267        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+268        		CCS_den '09'x CCS_center '09'x CCS_relb '09'x CCS '09'x CCS_rat
+269        	;
+270        run;
+
+NOTE: The file SA_CAN is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Cancer!r3c1:r46c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SA_CAN.
+      The minimum record length was 47.
+      The maximum record length was 94.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+271        
+272        filename SA_BH  dde "Excel|STARAdult_BH!r3c1:r46c13" notab;
+273        data _null_;
+274        	set STAR_Adult;
+275        	file SA_BH;
+276        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+277        		AMM_den '09'x AMM '09'x AMM_center '09'x AMM_rat '09'x
+278        		FUH_den '09'x FUH '09'x FUH_center '09'x FUH_rat '09'x
+279        		BHcomp_relb '09'x BHcomp_rat
+280        	;
+281        run;
+
+NOTE: The file SA_BH is:
+      DDE Session,
+      SESSION=Excel|STARAdult_BH!r3c1:r46c13,RECFM=V,
+      LRECL=32767
+
+NOTE: 44 records were written to the file SA_BH.
+      The minimum record length was 62.
+      The maximum record length was 136.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+282        
+283        /*Update Sep 27 2023: change the column number from 17 to 13, since we deleted CDC
+283      ! test*/
+284        
+285        filename SA_DIA dde "Excel|STARAdult_Diabetes!r3c1:r46c13" notab;
+286        data _null_;
+287        	set STAR_Adult;
+288        	file SA_DIA;
+289        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+290        		KED_den '09'x KED '09'x KED_center '09'x KED_rat '09'x
+291                EED_den '09'x EED '09'x EED_center '09'x EED_rat '09'x
+292        		CDCcomp_relb '09'x CDCcomp_rat
+293        	;
+294        run;
+
+NOTE: The file SA_DIA is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Diabetes!r3c1:r46c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SA_DIA.
+      The minimum record length was 62.
+      The maximum record length was 136.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+295        
+296        
+297        filename SP_CUP dde "Excel|STARPLUS_Checkups!r3c1:r31c8" notab;
+298        data _null_;
+299        	set STARPLUS;
+300        	file SP_CUP;
+301        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+302        		AAP_den '09'x AAP_center '09'x AAP_relb '09'x AAP '09'x AAP_rat
+303        	;
+304        run;
+
+NOTE: The file SP_CUP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Checkups!r3c1:r31c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 29 records were written to the file SP_CUP.
+      The minimum record length was 68.
+      The maximum record length was 90.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+305        
+306        filename SP_CAN dde "Excel|STARPLUS_Cancer!r3c1:r31c13" notab;
+307        data _null_;
+308        	set STARPLUS;
+309        	file SP_CAN;
+310        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+311        		BCS_den '09'x BCS '09'x BCS_center '09'x BCS_rat '09'x
+312        		CCS_den '09'x CCS '09'x CCS_center '09'x CCS_rat '09'x
+313        		cancer_relb '09'x cancer_rat		
+314        	;
+315        run;
+
+NOTE: The file SP_CAN is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Cancer!r3c1:r31c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 29 records were written to the file SP_CAN.
+      The minimum record length was 53.
+      The maximum record length was 130.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+316        
+317        filename SP_BH  dde "Excel|STARPLUS_BH!r3c1:r31c13" notab;
+318        data _null_;
+319        	set STARPLUS;
+320        	file SP_BH;
+321        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+322        		AMM_den '09'x AMM '09'x AMM_center '09'x AMM_rat '09'x
+323        		FUH_den '09'x FUH '09'x FUH_center '09'x FUH_rat '09'x
+324        		BHcomp_relb '09'x BHcomp_rat
+325        	;
+326        run;
+
+NOTE: The file SP_BH is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_BH!r3c1:r31c13,RECFM=V,
+      LRECL=32767
+
+NOTE: 29 records were written to the file SP_BH.
+      The minimum record length was 64.
+      The maximum record length was 123.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+327        
+328        filename SP_IET dde "Excel|STARPLUS_IET_FollowUp!r3c1:r31c8" notab;
+329        data _null_;
+330        	set STARPLUS;
+331        	file SP_IET;
+332        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+333        		IET_den '09'x IET_center '09'x IET_relb '09'x IET '09'x IET_rat
+334        	;
+335        run;
+
+NOTE: The file SP_IET is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_IET_FollowUp!r3c1:r31c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 29 records were written to the file SP_IET.
+      The minimum record length was 47.
+      The maximum record length was 86.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+336        
+337        filename SP_COP dde "Excel|STARPLUS_COPD!r3c1:r31c17" notab;
+338        data _null_;
+339        	set STARPLUS;
+340        	file SP_COP;
+341        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+342        		PCEcort_den '09'x PCEcort '09'x PCEcort_center '09'x PCEcort_rat '09'x
+343        		PCEbronch_den '09'x PCEbronch '09'x PCEbronch_center '09'x PCEbronch_rat '09'x
+344        		SPR_den '09'x SPR '09'x SPR_center '09'x SPR_rat '09'x
+345        		COPD_relb '09'x COPD_rat
+346        	;
+347        run;
+
+NOTE: The file SP_COP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_COPD!r3c1:r31c17,
+      RECFM=V,LRECL=32767
+
+NOTE: 29 records were written to the file SP_COP.
+      The minimum record length was 62.
+      The maximum record length was 161.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+348        
+349        filename SP_DIA dde "Excel|STARPLUS_Diabetes!r3c1:r31c17" notab;
+350        data _null_;
+351        	set STARPLUS;
+352        	file SP_DIA;
+353        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+354        		KED_den '09'x KED '09'x KED_center '09'x KED_rat '09'x
+355        		EED_den '09'x EED '09'x EED_center '09'x EED_rat '09'x
+356        		CDCcomp_relb '09'x CDCcomp_rat
+357        	;
+358        run;
+
+NOTE: The file SP_DIA is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Diabetes!r3c1:r31c17,
+      RECFM=V,LRECL=32767
+
+NOTE: 29 records were written to the file SP_DIA.
+      The minimum record length was 106.
+      The maximum record length was 126.
+NOTE: There were 29 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+359        
+360        filename SK_CUP dde "Excel|STARKids_Checkups!r3c1:r30c13" notab;
+361        data _null_;
+362        	set STARKids;
+363        	file SK_CUP;
+364        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+365        		WCV11_den '09'x WCV11 '09'x WCV11_center '09'x WCV11_rat '09'x
+366        		WCV17_den '09'x WCV17 '09'x WCV17_center '09'x WCV17_rat '09'x
+367        		WCV_relb '09'x WCVcomp_rat
+368        	;
+369        run;
+
+NOTE: The file SK_CUP is:
+      DDE Session,
+      SESSION=Excel|STARKids_Checkups!r3c1:r30c13,
+      RECFM=V,LRECL=32767
+
+NOTE: 28 records were written to the file SK_CUP.
+      The minimum record length was 107.
+      The maximum record length was 139.
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+370        
+371        filename SK_BH  dde "Excel|STARKids_BH_FollowUp!r3c1:r30c8" notab;
+372        data _null_;
+373        	set STARKids;
+374        	file SK_BH;
+375        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+376        		FUH_den '09'x FUH_center '09'x FUH_relb '09'x FUH '09'x FUH_rat
+377        	;
+378        run;
+
+NOTE: The file SK_BH is:
+      DDE Session,
+      SESSION=Excel|STARKids_BH_FollowUp!r3c1:r30c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 28 records were written to the file SK_BH.
+      The minimum record length was 39.
+      The maximum record length was 98.
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+379        
+380        filename SK_APM dde "Excel|STARKids_Antipsychotics!r3c1:r30c8" notab;
+381        data _null_;
+382        	set STARKids;
+383        	file SK_APM;
+384        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+385        		APM_den '09'x APM_center '09'x APM_relb '09'x APM '09'x APM_rat
+386        	;
+387        run;
+
+NOTE: The file SK_APM is:
+      DDE Session,
+      SESSION=Excel|STARKids_Antipsychotics!r3c1:r30c8,
+      RECFM=V,LRECL=32767
+
+NOTE: 28 records were written to the file SK_APM.
+      The minimum record length was 47.
+      The maximum record length was 98.
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+388        
+389        
+390        
+391        filename R_SC_W30 dde "Excel|STARChild_W30checkups!r3c15:r11c16" notab;
+392        data _null_;
+393        	set RG_SC_W30(where=(W30comp_rat ne .));
+394        	file R_SC_W30;
+395        	put W30comp_rat '09'x count;
+396        run;
+
+NOTE: The file R_SC_W30 is:
+      DDE Session,
+      SESSION=Excel|STARChild_W30checkups!r3c15:r11c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 9 records were written to the file R_SC_W30.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 9 observations read from the data set WORK.RG_SC_W30.
+      WHERE W30comp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+397        
+398        filename R_SC_WCV dde "Excel|STARChild_WCVcheckups!r3c15:r9c16" notab;
+399        data _null_;
+400        	set RG_SC_WCV(where=(WCVcomp_rat ne .));
+401        	file R_SC_WCV;
+402        	put WCVcomp_rat '09'x count;
+403        run;
+
+NOTE: The file R_SC_WCV is:
+      DDE Session,
+      SESSION=Excel|STARChild_WCVcheckups!r3c15:r9c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 8 records were written to the file R_SC_WCV.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 8 observations read from the data set WORK.RG_SC_WCV.
+      WHERE WCVcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+404        
+405        filename R_SC_VAC dde "Excel|STARChild_Vaccines!r3c15:r10c16" notab;
+406        data _null_;
+407        	set RG_SC_Vacc(where=(vacc_rat ne .));
+408        	file R_SC_VAC;
+409        	put vacc_rat '09'x count;
+410        run;
+
+NOTE: The file R_SC_VAC is:
+      DDE Session,
+      SESSION=Excel|STARChild_Vaccines!r3c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 8 records were written to the file R_SC_VAC.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 8 observations read from the data set WORK.RG_SC_VACC.
+      WHERE vacc_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+411        
+412        filename R_SC_AMR dde "Excel|STARChild_Asthma!r3c10:r7c12" notab;
+413        data _null_;
+414        	set RG_SC_AMR(where=(AMR_rat ne .));
+415        	file R_SC_AMR;
+416        	put AMR_center '09'x AMR_rat '09'x count;
+417        run;
+
+NOTE: The file R_SC_AMR is:
+      DDE Session,
+      SESSION=Excel|STARChild_Asthma!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SC_AMR.
+      The minimum record length was 17.
+      The maximum record length was 19.
+NOTE: There were 5 observations read from the data set WORK.RG_SC_AMR.
+      WHERE AMR_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+418        
+419        filename R_SC_ADD dde "Excel|STARChild_ADD!r3c10:r7c12" notab;
+420        data _null_;
+421        	set RG_SC_ADD(where=(ADD_rat ne .));
+422        	file R_SC_ADD;
+423        	put ADD_center '09'x ADD_rat '09'x count;
+424        run;
+
+NOTE: The file R_SC_ADD is:
+      DDE Session,
+      SESSION=Excel|STARChild_ADD!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SC_ADD.
+      The minimum record length was 17.
+      The maximum record length was 19.
+NOTE: There were 5 observations read from the data set WORK.RG_SC_ADD.
+      WHERE ADD_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+425        
+426        filename R_SA_Pre dde "Excel|STARAdult_Prenatal!r3c10:r7c12" notab;
+427        data _null_;
+428        	set RG_SA_PPCpre(where=(PPCpre_rat ne .));
+429        	file R_SA_Pre;
+430        	put PPCpre_center '09'x PPCpre_rat '09'x count;
+431        run;
+
+NOTE: The file R_SA_PRE is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Prenatal!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SA_PRE.
+      The minimum record length was 18.
+      The maximum record length was 20.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_PPCPRE.
+      WHERE PPCpre_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+432        
+433        filename R_SA_Pot dde "Excel|STARAdult_Postpartum!r3c10:r7c12" notab;
+434        data _null_;
+435        	set RG_SA_PPCpost(where=(PPCpost_rat ne .));
+436        	file R_SA_Pot;
+437        	put PPCpost_center '09'x PPCpost_rat '09'x count;
+438        run;
+
+NOTE: The file R_SA_POT is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Postpartum!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SA_POT.
+      The minimum record length was 17.
+      The maximum record length was 20.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_PPCPOST.
+      WHERE PPCpost_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+439        
+440        filename R_SA_CUP dde "Excel|STARAdult_Checkups!r3c10:r7c12" notab;
+441        data _null_;
+442        	set RG_SA_AAP(where=(AAP_rat ne .));
+443        	file R_SA_CUP;
+444        	put AAP_center '09'x AAP_rat '09'x count;
+445        run;
+
+NOTE: The file R_SA_CUP is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Checkups!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SA_CUP.
+      The minimum record length was 17.
+      The maximum record length was 20.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_AAP.
+      WHERE AAP_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+446        
+447        filename R_SA_CAN dde "Excel|STARAdult_Cancer!r3c10:r7c12" notab;
+448        data _null_;
+449        	set RG_SA_CCS(where=(CCS_rat ne .));
+450        	file R_SA_CAN;
+451        	put CCS_center '09'x CCS_rat '09'x count;
+452        run;
+
+NOTE: The file R_SA_CAN is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Cancer!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SA_CAN.
+      The minimum record length was 18.
+      The maximum record length was 19.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_CCS.
+      WHERE CCS_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+453        
+454        filename R_SA_BH  dde "Excel|STARAdult_BH!r3c15:r9c16" notab;
+455        data _null_;
+456        	set RG_SA_BH(where=(BHcomp_rat ne .));
+457        	file R_SA_BH;
+458        	put BHcomp_rat '09'x count;
+459        run;
+
+NOTE: The file R_SA_BH is:
+      DDE Session,
+      SESSION=Excel|STARAdult_BH!r3c15:r9c16,RECFM=V,
+      LRECL=32767
+
+NOTE: 7 records were written to the file R_SA_BH.
+      The minimum record length was 4.
+      The maximum record length was 7.
+NOTE: There were 7 observations read from the data set WORK.RG_SA_BH.
+      WHERE BHcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+460        
+461        filename R_SA_DIA dde "Excel|STARAdult_Diabetes!r3c15:r8c16" notab;
+462        data _null_;
+463        	set RG_SA_CDCcomp(where=(CDCcomp_rat ne .));
+464        	file R_SA_DIA;
+465        	put CDCcomp_rat '09'x count;
+466        run;
+
+NOTE: The file R_SA_DIA is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Diabetes!r3c15:r8c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 6 records were written to the file R_SA_DIA.
+      The minimum record length was 4.
+      The maximum record length was 7.
+NOTE: There were 6 observations read from the data set WORK.RG_SA_CDCCOMP.
+      WHERE CDCcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+467        
+468        filename R_SP_CUP dde "Excel|STARPLUS_Checkups!r3c10:r7c12" notab;
+469        data _null_;
+470        	set RG_SP_AAP(where=(AAP_rat ne .));
+471        	file R_SP_CUP;
+472        	put AAP_center '09'x AAP_rat '09'x count;
+473        run;
+
+NOTE: The file R_SP_CUP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Checkups!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SP_CUP.
+      The minimum record length was 18.
+      The maximum record length was 20.
+NOTE: There were 5 observations read from the data set WORK.RG_SP_AAP.
+      WHERE AAP_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+474        
+475        filename R_SP_CAN dde "Excel|STARPLUS_Cancer!r3c15:r9c16" notab;
+476        data _null_;
+477        	set RG_SP_Cancer(where=(cancer_rat ne .));
+478        	file R_SP_CAN;
+479        	put cancer_rat '09'x count;
+480        run;
+
+NOTE: The file R_SP_CAN is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Cancer!r3c15:r9c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 7 records were written to the file R_SP_CAN.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 7 observations read from the data set WORK.RG_SP_CANCER.
+      WHERE cancer_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+481        
+482        filename R_SP_BH  dde "Excel|STARPLUS_BH!r3c15:r9c16" notab;
+483        data _null_;
+484        	set RG_SP_BH(where=(BHcomp_rat ne .));
+485        	file R_SP_BH;
+486        	put BHcomp_rat '09'x count;
+487        run;
+
+NOTE: The file R_SP_BH is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_BH!r3c15:r9c16,RECFM=V,
+      LRECL=32767
+
+NOTE: 7 records were written to the file R_SP_BH.
+      The minimum record length was 4.
+      The maximum record length was 7.
+NOTE: There were 7 observations read from the data set WORK.RG_SP_BH.
+      WHERE BHcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+488        
+489        filename R_SP_IET dde "Excel|STARPLUS_IET_FollowUp!r3c10:r7c12" notab;
+490        data _null_;
+491        	set RG_SP_IET(where=(IET_rat ne .));
+492        	file R_SP_IET;
+493        	put IET_center '09'x IET_rat '09'x count;
+494        run;
+
+NOTE: The file R_SP_IET is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_IET_FollowUp!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SP_IET.
+      The minimum record length was 18.
+      The maximum record length was 18.
+NOTE: There were 5 observations read from the data set WORK.RG_SP_IET.
+      WHERE IET_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+495        
+496        filename R_SP_COP dde "Excel|STARPLUS_COPD!r3c19:r9c20" notab;
+497        data _null_;
+498        	set RG_SP_COPD(where=(COPD_rat ne .));
+499        	file R_SP_COP;
+500        	put COPD_rat '09'x count;
+501        run;
+
+NOTE: The file R_SP_COP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_COPD!r3c19:r9c20,
+      RECFM=V,LRECL=32767
+
+NOTE: 7 records were written to the file R_SP_COP.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 7 observations read from the data set WORK.RG_SP_COPD.
+      WHERE COPD_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+502        
+503        filename R_SP_DIA dde "Excel|STARPLUS_Diabetes!r3c15:r9c16" notab;
+504        data _null_;
+505        	set RG_SP_CDCcomp(where=(CDCcomp_rat ne .));
+506        	file R_SP_DIA;
+507        	put CDCcomp_rat '09'x count;
+508        run;
+
+NOTE: The file R_SP_DIA is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Diabetes!r3c15:r9c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 8 records were written to the file R_SP_DIA.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 8 observations read from the data set WORK.RG_SP_CDCCOMP.
+      WHERE CDCcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+509        
+510        filename R_SK_CUP dde "Excel|STARKids_Checkups!r3c15:r9c16" notab;
+511        data _null_;
+512        	set RG_SK_WCV(where=(WCVcomp_rat ne .));
+513        	file R_SK_CUP;
+514        	put WCVcomp_rat '09'x count;
+515        run;
+
+NOTE: The file R_SK_CUP is:
+      DDE Session,
+      SESSION=Excel|STARKids_Checkups!r3c15:r9c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 7 records were written to the file R_SK_CUP.
+      The minimum record length was 4.
+      The maximum record length was 6.
+NOTE: There were 7 observations read from the data set WORK.RG_SK_WCV.
+      WHERE WCVcomp_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+516        
+517        filename R_SK_BH  dde "Excel|STARKids_BH_FollowUp!r3c10:r7c12" notab;
+518        data _null_;
+519        	set RG_SK_FUH(where=(FUH_rat ne .));
+520        	file R_SK_BH;
+521        	put FUH_center '09'x FUH_rat '09'x count;
+522        run;
+
+NOTE: The file R_SK_BH is:
+      DDE Session,
+      SESSION=Excel|STARKids_BH_FollowUp!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SK_BH.
+      The minimum record length was 17.
+      The maximum record length was 18.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_FUH.
+      WHERE FUH_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+523        
+524        filename R_SK_APM dde "Excel|STARKids_Antipsychotics!r3c10:r7c12" notab;
+525        data _null_;
+526        	set RG_SK_APM(where=(APM_rat ne .));
+527        	file R_SK_APM;
+528        	put APM_center '09'x APM_rat '09'x count;
+529        run;
+
+NOTE: The file R_SK_APM is:
+      DDE Session,
+      SESSION=Excel|STARKids_Antipsychotics!r3c10:r7c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file R_SK_APM.
+      The minimum record length was 18.
+      The maximum record length was 18.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_APM.
+      WHERE APM_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+530        
+531        
+532        ** ---- file the frequency for No rating
+532      ! --------------------------------------------------;
+533        proc format;
+534        	
+534      !  value rating_f
+535        		. = "No rating"
+536        		;
+NOTE: Format RATING_F has been output.
+537        run;
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+538        
+539        
+540        filename M_SC_W30 dde "Excel|STARChild_W30checkups!r12c15:r12c16" notab;
+541        data _null_;
+542        	set RG_SC_W30(where=(W30comp_rat = .));
+543        	file M_SC_W30;
+544        	put W30comp_rat '09'x count;
+545        	format W30comp_rat rating_f.;
+546        run;
+
+NOTE: The file M_SC_W30 is:
+      DDE Session,
+      SESSION=Excel|STARChild_W30checkups!r12c15:r12c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SC_W30.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SC_W30.
+      WHERE W30comp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+547        
+548        filename M_SC_WCV dde "Excel|STARChild_WCVcheckups!r10c15:r10c16" notab;
+549        data _null_;
+550        	set RG_SC_WCV(where=(WCVcomp_rat = .));
+551        	file M_SC_WCV;
+552        	put WCVcomp_rat '09'x count;
+553        	format WCVcomp_rat rating_f.;
+554        run;
+
+NOTE: The file M_SC_WCV is:
+      DDE Session,
+      SESSION=Excel|STARChild_WCVcheckups!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SC_WCV.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SC_WCV.
+      WHERE WCVcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+555        
+556        filename M_SC_VAC dde "Excel|STARChild_Vaccines!r11c15:r11c16" notab;
+557        data _null_;
+558        	set RG_SC_Vacc(where=(vacc_rat = .));
+559        	file M_SC_VAC;
+560        	put vacc_rat '09'x count;
+561        	format vacc_rat rating_f.;
+562        run;
+
+NOTE: The file M_SC_VAC is:
+      DDE Session,
+      SESSION=Excel|STARChild_Vaccines!r11c15:r11c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SC_VAC.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SC_VACC.
+      WHERE vacc_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+563        
+564        filename M_SC_AMR dde "Excel|STARChild_Asthma!r8c11:r8c12" notab;
+565        data _null_;
+566        	set RG_SC_AMR(where=(AMR_rat = .));
+567        	file M_SC_AMR;
+568        	put AMR_rat '09'x count;
+569        	format AMR_rat rating_f.;
+570        run;
+
+NOTE: The file M_SC_AMR is:
+      DDE Session,
+      SESSION=Excel|STARChild_Asthma!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SC_AMR.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SC_AMR.
+      WHERE AMR_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+571        
+572        filename M_SC_ADD dde "Excel|STARChild_ADD!r8c11:r8c12" notab;
+573        data _null_;
+574        	set RG_SC_ADD(where=(ADD_rat = .));
+575        	file M_SC_ADD;
+576        	put ADD_rat '09'x count;
+577        	format ADD_rat rating_f.;
+578        run;
+
+NOTE: The file M_SC_ADD is:
+      DDE Session,
+      SESSION=Excel|STARChild_ADD!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SC_ADD.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SC_ADD.
+      WHERE ADD_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+579        
+580        filename M_SA_Pre dde "Excel|STARAdult_Prenatal!r8c11:r8c12" notab;
+581        data _null_;
+582        	set RG_SA_PPCpre(where=(PPCpre_rat = .));
+583        	file M_SA_Pre;
+584        	put PPCpre_rat '09'x count;
+585        	format PPCpre_rat rating_f.;
+586        run;
+
+NOTE: The file M_SA_PRE is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Prenatal!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SA_PRE.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SA_PPCPRE.
+      WHERE PPCpre_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+587        
+588        filename M_SA_Pot dde "Excel|STARAdult_Postpartum!r8c11:r8c12" notab;
+589        data _null_;
+590        	set RG_SA_PPCpost(where=(PPCpost_rat = .));
+591        	file M_SA_Pot;
+592        	put PPCpost_rat '09'x count;
+593        	format PPCpost_rat rating_f.;
+594        run;
+
+NOTE: The file M_SA_POT is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Postpartum!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SA_POT.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SA_PPCPOST.
+      WHERE PPCpost_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+595        
+596        filename M_SA_CUP dde "Excel|STARAdult_Checkups!r8c11:r8c12" notab;
+597        data _null_;
+598        	set RG_SA_AAP(where=(AAP_rat = .));
+599        	file M_SA_CUP;
+600        	put AAP_rat '09'x count;
+601        	format AAP_rat rating_f.;
+602        run;
+
+NOTE: The file M_SA_CUP is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Checkups!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 0 records were written to the file M_SA_CUP.
+NOTE: There were 0 observations read from the data set WORK.RG_SA_AAP.
+      WHERE AAP_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+603        
+604        filename M_SA_CAN dde "Excel|STARAdult_Cancer!r8c11:r8c12" notab;
+605        data _null_;
+606        	set RG_SA_CCS(where=(CCS_rat = .));
+607        	file M_SA_CAN;
+608        	put CCS_rat '09'x count;
+609        	format CCS_rat rating_f.;
+610        run;
+
+NOTE: The file M_SA_CAN is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Cancer!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SA_CAN.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SA_CCS.
+      WHERE CCS_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+611        
+612        filename M_SA_BH  dde "Excel|STARAdult_BH!r10c15:r10c16" notab;
+613        data _null_;
+614        	set RG_SA_BH(where=(BHcomp_rat = .));
+615        	file M_SA_BH;
+616        	put BHcomp_rat '09'x count;
+617        	format BHcomp_rat rating_f.;
+618        run;
+
+NOTE: The file M_SA_BH is:
+      DDE Session,
+      SESSION=Excel|STARAdult_BH!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SA_BH.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SA_BH.
+      WHERE BHcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+619        
+620        filename M_SA_DIA dde "Excel|STARAdult_Diabetes!r9c15:r9c16" notab;
+621        data _null_;
+622        	set RG_SA_CDCcomp(where=(CDCcomp_rat = .));
+623        	file M_SA_DIA;
+624        	put CDCcomp_rat '09'x count;
+625        	format CDCcomp_rat rating_f.;
+626        run;
+
+NOTE: The file M_SA_DIA is:
+      DDE Session,
+      SESSION=Excel|STARAdult_Diabetes!r9c15:r9c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SA_DIA.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SA_CDCCOMP.
+      WHERE CDCcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+627        
+628        filename M_SP_CUP dde "Excel|STARPLUS_Checkups!r8c11:r8c12" notab;
+629        data _null_;
+630        	set RG_SP_AAP(where=(AAP_rat = .));
+631        	file M_SP_CUP;
+632        	put AAP_rat '09'x count;
+633        	format AAP_rat rating_f.;
+634        run;
+
+NOTE: The file M_SP_CUP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Checkups!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 0 records were written to the file M_SP_CUP.
+NOTE: There were 0 observations read from the data set WORK.RG_SP_AAP.
+      WHERE AAP_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+635        
+636        filename M_SP_CAN dde "Excel|STARPLUS_Cancer!r10c15:r10c16" notab;
+637        data _null_;
+638        	set RG_SP_Cancer(where=(cancer_rat = .));
+639        	file M_SP_CAN;
+640        	put cancer_rat '09'x count;
+641        	format cancer_rat rating_f.;
+642        run;
+
+NOTE: The file M_SP_CAN is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Cancer!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SP_CAN.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SP_CANCER.
+      WHERE cancer_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+643        
+644        filename M_SP_BH  dde "Excel|STARPLUS_BH!r10c15:r10c16" notab;
+645        data _null_;
+646        	set RG_SP_BH(where=(BHcomp_rat = .));
+647        	file M_SP_BH;
+648        	put BHcomp_rat '09'x count;
+649        	format BHcomp_rat rating_f.;
+650        run;
+
+NOTE: The file M_SP_BH is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_BH!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SP_BH.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SP_BH.
+      WHERE BHcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+651        
+652        filename M_SP_IET dde "Excel|STARPLUS_IET_FollowUp!r8c11:r8c12" notab;
+653        data _null_;
+654        	set RG_SP_IET(where=(IET_rat = .));
+655        	file M_SP_IET;
+656        	put IET_rat '09'x count;
+657        	format IET_rat rating_f.;
+658        run;
+
+NOTE: The file M_SP_IET is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_IET_FollowUp!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SP_IET.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SP_IET.
+      WHERE IET_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+659        
+660        filename M_SP_COP dde "Excel|STARPLUS_COPD!r10c19:r10c20" notab;
+661        data _null_;
+662        	set RG_SP_COPD(where=(COPD_rat = .));
+663        	file M_SP_COP;
+664        	put COPD_rat '09'x count;
+665        	format COPD_rat rating_f.;
+666        run;
+
+NOTE: The file M_SP_COP is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_COPD!r10c19:r10c20,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SP_COP.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SP_COPD.
+      WHERE COPD_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+667        
+668        filename M_SP_DIA dde "Excel|STARPLUS_Diabetes!r10c15:r10c16" notab;
+669        data _null_;
+670        	set RG_SP_CDCcomp(where=(CDCcomp_rat = .));
+671        	file M_SP_DIA;
+672        	put CDCcomp_rat '09'x count;
+673        	format CDCcomp_rat rating_f.;
+674        run;
+
+NOTE: The file M_SP_DIA is:
+      DDE Session,
+      SESSION=Excel|STARPLUS_Diabetes!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 0 records were written to the file M_SP_DIA.
+NOTE: There were 0 observations read from the data set WORK.RG_SP_CDCCOMP.
+      WHERE CDCcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+675        
+676        filename M_SK_CUP dde "Excel|STARKids_Checkups!r10c15:r10c16" notab;
+677        data _null_;
+678        	set RG_SK_WCV(where=(WCVcomp_rat = .));
+679        	file M_SK_CUP;
+680        	put WCVcomp_rat '09'x count;
+681        	format WCVcomp_rat rating_f.;
+682        run;
+
+NOTE: The file M_SK_CUP is:
+      DDE Session,
+      SESSION=Excel|STARKids_Checkups!r10c15:r10c16,
+      RECFM=V,LRECL=32767
+
+NOTE: 0 records were written to the file M_SK_CUP.
+NOTE: There were 0 observations read from the data set WORK.RG_SK_WCV.
+      WHERE WCVcomp_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+683        
+684        filename M_SK_BH  dde "Excel|STARKids_BH_FollowUp!r8c11:r8c12" notab;
+685        data _null_;
+686        	set RG_SK_FUH(where=(FUH_rat = .));
+687        	file M_SK_BH;
+688        	put FUH_rat '09'x count;
+689        	format FUH_rat rating_f.;
+690        run;
+
+NOTE: The file M_SK_BH is:
+      DDE Session,
+      SESSION=Excel|STARKids_BH_FollowUp!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SK_BH.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SK_FUH.
+      WHERE FUH_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+691        
+692        filename M_SK_APM dde "Excel|STARKids_Antipsychotics!r8c11:r8c12" notab;
+693        data _null_;
+694        	set RG_SK_APM(where=(APM_rat = .));
+695        	file M_SK_APM;
+696        	put APM_rat '09'x count;
+697        	format APM_rat rating_f.;
+698        run;
+
+NOTE: The file M_SK_APM is:
+      DDE Session,
+      SESSION=Excel|STARKids_Antipsychotics!r8c11:r8c12,
+      RECFM=V,LRECL=32767
+
+NOTE: 1 record was written to the file M_SK_APM.
+      The minimum record length was 12.
+      The maximum record length was 12.
+NOTE: There were 1 observations read from the data set WORK.RG_SK_APM.
+      WHERE APM_rat=.;
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+699        
+700        
+701        
+702        data _null_;
+703        	file ddeopen;
+704        	put '[error(false)]';
+705        	put '[save.as("C:\Users\jiang.shao\Dropbox (UFL)\MCO Report Card - 2024\Program\2.
+705      ! Admin\Output\Adminstrative_Ratings_final_corrected_Dec13.xlsx")]';
+706        	put '[file.close(false)]';
+707        run;
+
+NOTE: The file DDEOPEN is:
+      DDE Session,
+      SESSION=Excel|system,RECFM=V,LRECL=32767
+
+NOTE: 3 records were written to the file DDEOPEN.
+      The minimum record length was 14.
+      The maximum record length was 142.
+NOTE: DATA statement used (Total process time):
+      real time           5.33 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           12.48 seconds
+      cpu time            1.43 seconds
+      
